@@ -3,13 +3,13 @@ import { Speaker } from './Speaker'
 import { Tag } from './Tag'
 
 export type Speech = {
-    id: string
+    _id: string
     topic: string
-    duration: {
+    dates: {
         start: string
         end: string
     }
-    conferenceId: Conference['id']
-    speakerId: Speaker['id']
+    conferenceId: Conference['_id']
+    speakerId: Speaker['_id']
     tagIds: Tag['id'][]
 }

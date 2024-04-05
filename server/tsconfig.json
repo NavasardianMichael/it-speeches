@@ -3,7 +3,7 @@
         "target": "ES2015",
         "outDir": "./build",
         "strict": true,
-        "module": "CommonJS",
+        "module": "NodeNext",
         "esModuleInterop": true
     }
 }

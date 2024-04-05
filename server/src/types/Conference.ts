@@ -1,12 +1,12 @@
 import type { Speech } from './Speech'
 
 export type Conference = {
-    id: string
+    _id: string
     title: string
     location: string
     dates: {
         start: string
         end: string
     }
-    speechIds: Speech['id'][]
+    speechIds: Speech['_id'][]
 }
