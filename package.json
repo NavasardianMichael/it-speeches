@@ -1,0 +1,26 @@
+{
+  "name": "it-speeches",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-dev": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "dev": "cd client && npm run dev",
+    "server": "cd server && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NavasardianMichael/it-speeches.git"
+  },
+  "author": "Michael Navasardyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NavasardianMichael/it-speeches/issues"
+  },
+  "homepage": "https://github.com/NavasardianMichael/it-speeches#readme",
+  "dependencies": {
+    "antd": "^5.16.1"
+  }
+}
