@@ -47,9 +47,11 @@
 // export default App
 
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
+import { getConferencesAsync } from './store/conference/thunks';
+import { useAppDispatch } from './hooks/useAppDispatch';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -58,21 +60,30 @@ const onChange = (key: string) => {
 const items: TabsProps['items'] = [
   {
     key: '1',
-    label: 'Tab 1',
+    label: 'Conferences',
     children: 'Content of Tab Pane 1',
   },
   {
     key: '2',
-    label: 'Tab 2',
+    label: 'Speeches',
     children: 'Content of Tab Pane 2',
   },
   {
     key: '3',
-    label: 'Tab 3',
+    label: 'Speakers',
     children: 'Content of Tab Pane 3',
   },
 ];
 
-const App: React.FC = () => <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
+const App: React.FC = () => {
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getConferencesAsync())
+  }, [dispatch])
+
+  return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+};
 
 export default App;

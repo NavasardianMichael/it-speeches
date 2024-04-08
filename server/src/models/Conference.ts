@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const ConferenceSchema = new Schema({
-    title: String,
+    name: String,
     location: String,
     dates: {
         start: String,
