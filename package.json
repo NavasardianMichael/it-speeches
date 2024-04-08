@@ -9,6 +9,7 @@
     "install-server": "cd server && npm install",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run dev",
+    "ii": "concurrently \"npm i\" \"npm run install-server\" \"npm run install-dev\"",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
