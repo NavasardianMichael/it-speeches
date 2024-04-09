@@ -1,6 +1,6 @@
-import { StateSliceName } from '@helpers/types/store'
-import { createAsyncThunk,  } from '@reduxjs/toolkit'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 import { TAppDispatch, TRootState } from 'store'
+import { StateSliceName } from '@helpers/types/store'
 
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: TRootState
@@ -11,6 +11,6 @@ export const createAppAsyncThunk = createAsyncThunk.withTypes<{
 
 export const getSliceActionGroup = (name: StateSliceName) => {
   return (groupName: string) => {
-    return (action) => action.type.startsWith(name) && action.type.endsWith(groupName);
-  };
-};
+    return (action) => action.type.startsWith(name) && action.type.endsWith(groupName)
+  }
+}

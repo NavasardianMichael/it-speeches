@@ -1,15 +1,15 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { STATE_SLICE_NAMES } from '@helpers/constants/store';
-import { getSliceActionGroup } from '@helpers/utils/store';
-import { ConferenceActionPayloads, ConferenceSlice } from './types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { STATE_SLICE_NAMES } from '@helpers/constants/store'
+import { getSliceActionGroup } from '@helpers/utils/store'
+import { ConferenceActionPayloads, ConferenceSlice } from './types'
 
-const conferencesActionTypeMatcher = getSliceActionGroup(STATE_SLICE_NAMES.conferences);
+const conferencesActionTypeMatcher = getSliceActionGroup(STATE_SLICE_NAMES.conferences)
 
 const initialState: ConferenceSlice = {
   byId: {},
   allIds: [],
   isPending: false,
-  errorMessage: ''
+  errorMessage: '',
 }
 
 export const conferencesSlice = createSlice({
@@ -19,14 +19,14 @@ export const conferencesSlice = createSlice({
     setConferences: (state, { payload }: PayloadAction<ConferenceActionPayloads['setConferences']>) => {
       return {
         ...state,
-        ...payload
+        ...payload,
       }
     },
     setConferenceOptions: (state, { payload }: PayloadAction<ConferenceActionPayloads['setConferenceOptions']>) => {
       state.byId[payload.id] = {
         ...state.byId[payload.id],
-        ...payload
-      } 
+        ...payload,
+      }
     },
   },
   extraReducers: (builder) => {
@@ -37,25 +37,16 @@ export const conferencesSlice = createSlice({
       // .addCase(getUsersAsync.fulfilled, (state, action) => {
       //   state.isPending = false
       // })
-      .addMatcher(
-        conferencesActionTypeMatcher("/pending"),
-        (state) => {
-          state.isPending = true;
-        }
-      )
-      .addMatcher(
-        conferencesActionTypeMatcher("/fulfilled"),
-        (state) => {
-          state.isPending = false;
-        }
-      )
-      .addMatcher(
-        conferencesActionTypeMatcher("/rejected"),
-        (state, action: PayloadAction<Error>) => {
-          state.isPending = false;
-          state.errorMessage = action.payload.message;
-        }
-      );
+      .addMatcher(conferencesActionTypeMatcher('/pending'), (state) => {
+        state.isPending = true
+      })
+      .addMatcher(conferencesActionTypeMatcher('/fulfilled'), (state) => {
+        state.isPending = false
+      })
+      .addMatcher(conferencesActionTypeMatcher('/rejected'), (state, action: PayloadAction<Error>) => {
+        state.isPending = false
+        state.errorMessage = action.payload.message
+      })
   },
 })
 

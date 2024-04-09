@@ -3,4 +3,4 @@ export type Normalized<T extends { id: string }> = {
   allIds: T['id'][]
 }
 
-export type PartialButRequired<T, K extends keyof T> = Pick<T, K> & Partial<T> 
+export type PartialButRequired<T, K extends keyof T> = Pick<T, K> & Partial<T>

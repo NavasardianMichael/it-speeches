@@ -1,19 +1,16 @@
 // import { useEffect, useState } from 'react'
 // import './App.css'
-
 // function App() {
 //   const [conferences, setConferences] = useState([])
-
 //   useEffect(() => {
 //     if(conferences.length) return
 //     const getConferences = async () => {
 //       const response = await fetch('http://localhost:5000/conference')
-//       const result = await response.json()  
+//       const result = await response.json()
 //       setConferences(result);
 //     }
 //     getConferences()
 //   }, [conferences])
-
 //   const saveConference = () => {
 //     fetch('http://localhost:5000/conference', {
 //       method: 'POST',
@@ -29,9 +26,8 @@
 //         },
 //         speechIds: []
 //       })
-//     })  
+//     })
 //   }
-  
 //   return (
 //     <>
 //       <button onClick={saveConference}>Send</button>
@@ -43,47 +39,53 @@
 //     </>
 //   )
 // }
-
 // export default App
-
-
-import React, { useEffect } from 'react';
-import { Tabs } from 'antd';
-import type { TabsProps } from 'antd';
-import { getConferencesAsync } from './store/conference/thunks';
-import { useAppDispatch } from './hooks/useAppDispatch';
+import React, { useEffect } from 'react'
+import { StoreProvider } from '@store'
+import { Tabs } from 'antd'
+import type { TabsProps } from 'antd'
+import { Conferences } from '@components/conferences'
+import { Speakers } from '@components/speakers'
+import { Speeches } from '@components/speeches'
+import { useAppDispatch } from './hooks/useAppDispatch'
+import { getConferencesAsync } from './store/conference/thunks'
 
 const onChange = (key: string) => {
-  console.log(key);
-};
+  console.log(key)
+}
 
 const items: TabsProps['items'] = [
   {
     key: '1',
     label: 'Conferences',
-    children: 'Content of Tab Pane 1',
+    children: <Conferences />,
   },
   {
     key: '2',
     label: 'Speeches',
-    children: 'Content of Tab Pane 2',
+    children: <Speeches />,
   },
   {
     key: '3',
     label: 'Speakers',
-    children: 'Content of Tab Pane 3',
+    children: <Speakers />,
   },
-];
+]
 
 const App: React.FC = () => {
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    console.log({ dispatch })
+
     dispatch(getConferencesAsync())
   }, [dispatch])
 
-  return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-};
+  return (
+    <StoreProvider>
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </StoreProvider>
+  )
+}
 
-export default App;
+export default App

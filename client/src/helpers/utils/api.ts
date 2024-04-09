@@ -6,12 +6,12 @@ type TFetchArgs = {
   params?: RequestInit
 }
 
-export const appFetch = async<ExpectedResponse>({
+export const appFetch = async <ExpectedResponse>({
   url,
   queryParams,
   params,
 }: TFetchArgs): Promise<ExpectedResponse> => {
-  console.log({params});
+  console.log({ params })
   const combinedQueryParams = queryParams ? Object.entries(queryParams).map(([key, value]) => `${key}=${value}`) : ''
 
   const response = await fetch(url + combinedQueryParams, params)
@@ -22,9 +22,9 @@ export const appFetch = async<ExpectedResponse>({
 
 export const processResponseRow = (row: ResponseRow) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { _id, __v, ...rest } = row 
+  const { _id, __v, ...rest } = row
   return {
     id: _id,
-    ...rest
+    ...rest,
   }
 }

@@ -6,8 +6,7 @@ export const getConferencesAsync = createAppAsyncThunk(
   'conferences/getConferencesAsync',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      
-      console.log({'data':468});
+      console.log({ data: 468 })
       const data = await getConferences()
       dispatch(setConferences(data))
 
