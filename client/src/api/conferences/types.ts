@@ -1,4 +1,4 @@
-import { Conference } from '@store/conference/types'
+import { Conference } from '@store/conferences/types'
 import { ResponseForEntity } from '@helpers/types/api'
 
 export type GetConferencesResponse = ConferenceResponse[]

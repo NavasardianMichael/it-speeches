@@ -1,4 +1,4 @@
-import { Conference } from '@store/conference/types'
+import { Conference } from '@store/conferences/types'
 import { Normalized } from '@helpers/types/commons'
 import { processResponseRow } from '@helpers/utils/api'
 import { GetConferencesResponse } from './types'

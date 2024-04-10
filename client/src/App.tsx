@@ -48,7 +48,7 @@ import { Conferences } from '@components/conferences'
 import { Speakers } from '@components/speakers'
 import { Speeches } from '@components/speeches'
 import { useAppDispatch } from './hooks/useAppDispatch'
-import { getConferencesAsync } from './store/conference/thunks'
+import { getConferencesAsync } from './store/conferences/thunks'
 
 const onChange = (key: string) => {
   console.log(key)

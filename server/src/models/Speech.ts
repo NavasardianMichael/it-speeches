@@ -4,10 +4,7 @@ const Schema = mongoose.Schema;
 
 const SpeechSchema = new Schema({
     topic: String,
-    dates: {
-        start: String,
-        end: String
-    },
+    duration: String,
     conferenceId: mongoose.Types.ObjectId,
     speakerId: mongoose.Types.ObjectId,
 });

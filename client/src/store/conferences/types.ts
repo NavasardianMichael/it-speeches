@@ -1,3 +1,4 @@
+import { Speech } from '@store/speeches/types'
 import { Normalized, PartialButRequired } from '@helpers/types/commons'
 import { SliceCommonProps } from '@helpers/types/store'
 
@@ -6,7 +7,12 @@ export type ConferenceSlice = Normalized<Conference> & SliceCommonProps
 export type Conference = {
   id: string
   name: string
-  email: string
+  location: string
+  dates: {
+    start: string
+    end: string
+  }
+  speechIds: Speech['id'][]
 }
 
 export type ConferenceActionPayloads = {
