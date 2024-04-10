@@ -1,4 +1,5 @@
 import { ResponseRow } from '@helpers/types/api'
+import { objectToQueryString } from './commons'
 
 type TFetchArgs = {
   url: string
@@ -12,7 +13,7 @@ export const appFetch = async <ExpectedResponse>({
   params,
 }: TFetchArgs): Promise<ExpectedResponse> => {
   console.log({ params })
-  const combinedQueryParams = queryParams ? Object.entries(queryParams).map(([key, value]) => `${key}=${value}`) : ''
+  const combinedQueryParams = queryParams ? objectToQueryString(queryParams) : ''
 
   const response = await fetch(url + combinedQueryParams, params)
 

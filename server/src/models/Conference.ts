@@ -9,6 +9,7 @@ const ConferenceSchema = new Schema({
         start: String,
         end: String,
     },
+    icon: String,
     speechIds: [mongoose.Types.ObjectId]
 });
 

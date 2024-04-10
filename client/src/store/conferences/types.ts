@@ -8,10 +8,7 @@ export type Conference = {
   id: string
   name: string
   location: string
-  dates: {
-    start: string
-    end: string
-  }
+  date: string
   speechIds: Speech['id'][]
 }
 
