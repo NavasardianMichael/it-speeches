@@ -4,6 +4,7 @@ import { Button } from 'antd'
 import Title from 'antd/es/typography/Title'
 import { ConferenceForm } from './Form'
 import styles from './styles.module.css'
+import { INITIAL_CONFERENCE } from '@helpers/constants/store'
 
 type Props = unknown
 
@@ -14,7 +15,8 @@ export const Conferences: FC<Props> = () => {
       <Button type="primary" icon={<PlusOutlined />}>
         Add Conference
       </Button>
-      <ConferenceForm />
+
+      <ConferenceForm conference={INITIAL_CONFERENCE} />
     </div>
   )
 }

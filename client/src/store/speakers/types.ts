@@ -8,6 +8,7 @@ export type Speaker = {
   id: string
   fullName: string
   position: string
+  image: string
   speechIds: Speech['id'][]
 }
 
