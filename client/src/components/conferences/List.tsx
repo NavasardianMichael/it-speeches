@@ -3,6 +3,7 @@ import { selectConferences } from '@store/conferences/selectors'
 import { Card, Flex } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import { FC } from 'react'
+import { Description } from './Description'
 
 type Props = unknown
 
@@ -21,7 +22,7 @@ export const ConferencesList: FC<Props> = () => {
             style={{ width: 240 }}
             cover={<img alt="example" src={conference.image} />}
           >
-            <Meta title={conference.name} description={conference.date} />
+            <Meta title={conference.name} description={<Description details={conference} />} />
           </Card> 
         )
       })
