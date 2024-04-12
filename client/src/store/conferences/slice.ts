@@ -8,6 +8,7 @@ const conferencesActionTypeMatcher = getSliceActionGroup(STATE_SLICE_NAMES.confe
 const initialState: ConferenceSlice = {
   byId: {},
   allIds: [],
+  editableId: '',
   isPending: false,
   errorMessage: '',
 }
@@ -22,11 +23,20 @@ export const conferencesSlice = createSlice({
         ...payload,
       }
     },
+    addConference: (state, { payload }: PayloadAction<ConferenceActionPayloads['addConference']>) => {
+      state.byId[payload.id] = payload
+      state.allIds.push(payload.id)
+    },
     setConferenceOptions: (state, { payload }: PayloadAction<ConferenceActionPayloads['setConferenceOptions']>) => {
+      console.log({payload,state: JSON.parse(JSON.stringify(state))});
+      
       state.byId[payload.id] = {
-        ...state.byId[payload.id],
+        ...state.byId[payload.id] ?? {},
         ...payload,
       }
+    },
+    setEditableId: (state, { payload }: PayloadAction<ConferenceActionPayloads['setEditableId']>) => {
+      state.editableId = payload
     },
   },
   extraReducers: (builder) => {
@@ -44,12 +54,14 @@ export const conferencesSlice = createSlice({
         state.isPending = false
       })
       .addMatcher(conferencesActionTypeMatcher('/rejected'), (state, action: PayloadAction<Error>) => {
+        console.log('Error:', { action });
+        
         state.isPending = false
         state.errorMessage = action.payload.message
       })
   },
 })
 
-export const { setConferences, setConferenceOptions } = conferencesSlice.actions
+export const { setConferences, addConference, setConferenceOptions, setEditableId } = conferencesSlice.actions
 
 export default conferencesSlice.reducer

@@ -5,8 +5,9 @@ import cors from "cors";
 import express from "express";
 import { connect } from "mongoose";
 
-import { conferenceRouter } from "./routes/conference";
-import { speechRouter } from './routes/speech';
+import { conferencesRouter } from './routes/conferences';
+import { speechesRouter } from './routes/speeches';
+import { speakersRouter } from './routes/speakers';
 
 const PORT = 5000;
 
@@ -22,8 +23,9 @@ const initDB = async () => {
   await connect(process.env.MONGO_URL!);
 
   app.listen(PORT);
-  app.use("/", conferenceRouter);
-  app.use("/", speechRouter);
+  app.use("/", conferencesRouter);
+  app.use("/", speechesRouter);
+  app.use("/", speakersRouter);
 
   console.log(`listening on port ${PORT}: http://localhost:${PORT}`);
 };

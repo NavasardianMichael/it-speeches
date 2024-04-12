@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const SpeakerSchema = new Schema({
     fullName: String,
     position: String,
-    icon: String,
+    image: String,
     speechIds: [mongoose.Types.ObjectId],
 });
 
-export const SpeechModel = mongoose.model('Speaker', SpeakerSchema)
+export const SpeakerModel = mongoose.model('Speaker', SpeakerSchema)

@@ -28,4 +28,4 @@ router.patch("/conferences", async (req, res) => {
   res.status(200).json(conference);
 });
 
-export { router as conferenceRouter };
+export { router as conferencesRouter };

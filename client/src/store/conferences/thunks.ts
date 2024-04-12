@@ -1,18 +1,31 @@
-import { getConferences } from '@api/conferences/api'
+import { getConferences, postConferenceOptions } from '@api/conferences/api'
 import { createAppAsyncThunk } from '@helpers/utils/store'
-import { setConferences } from './slice'
+import { setConferenceOptions, setConferences } from './slice'
+import { Conference } from './types'
 
-export const getConferencesAsync = createAppAsyncThunk(
+export const getConferencesAsync = createAppAsyncThunk<unknown, unknown>(
   'conferences/getConferencesAsync',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      console.log({ data: 468 })
       const data = await getConferences()
       dispatch(setConferences(data))
 
-      return data
     } catch (e) {
-      const error = e as globalThis.Error
+      const error = e as Error
+      rejectWithValue(error)
+    }
+  }
+)
+
+export const setConferenceOptionsAsync = createAppAsyncThunk<unknown, Conference>(
+  'conferences/setConferenceOptionsAsync',
+  async (conference, { dispatch, rejectWithValue }) => {
+    try {
+      const data = await postConferenceOptions(conference)
+      dispatch(setConferenceOptions(data))
+
+    } catch (e) {
+      const error = e as Error
       rejectWithValue(error)
     }
   }

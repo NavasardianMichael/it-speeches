@@ -5,11 +5,8 @@ const Schema = mongoose.Schema;
 const ConferenceSchema = new Schema({
     name: String,
     location: String,
-    dates: {
-        start: String,
-        end: String,
-    },
-    icon: String,
+    date: String,
+    image: String,
     speechIds: [mongoose.Types.ObjectId]
 });
 

@@ -1,22 +1,24 @@
 import { FC } from 'react'
-import PlusOutlined from '@ant-design/icons/PlusOutlined'
-import { Button } from 'antd'
 import Title from 'antd/es/typography/Title'
+import { selectIsNewConferenceEditableId } from '@store/conferences/selectors'
+import { useAppSelector } from '@hooks/useAppSelector'
+import { STATE_SLICE_NAMES } from '@helpers/constants/store'
+import { NewEntityCreator } from '@components/newEntityCreator'
 import { ConferenceForm } from './Form'
 import styles from './styles.module.css'
-import { INITIAL_CONFERENCE } from '@helpers/constants/store'
+import { ConferencesList } from './List'
 
 type Props = unknown
 
 export const Conferences: FC<Props> = () => {
+  const isNewEntityCreationModeActive = useAppSelector(selectIsNewConferenceEditableId)
+  
   return (
     <div className={styles.conferences}>
       <Title>Conferences</Title>
-      <Button type="primary" icon={<PlusOutlined />}>
-        Add Conference
-      </Button>
-
-      <ConferenceForm conference={INITIAL_CONFERENCE} />
+      <NewEntityCreator entity={STATE_SLICE_NAMES.conferences} />
+      {isNewEntityCreationModeActive && <ConferenceForm />}
+      <ConferencesList />
     </div>
   )
 }

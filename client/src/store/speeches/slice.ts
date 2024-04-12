@@ -8,6 +8,7 @@ const SpeechesActionTypeMatcher = getSliceActionGroup(STATE_SLICE_NAMES.speeches
 const initialState: SpeechesSlice = {
   byId: {},
   allIds: [],
+  editableId: '',
   isPending: false,
   errorMessage: '',
 }

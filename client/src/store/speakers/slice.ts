@@ -8,6 +8,7 @@ const speakersActionTypeMatcher = getSliceActionGroup(STATE_SLICE_NAMES.speakers
 const initialState: SpeakersSlice = {
   byId: {},
   allIds: [],
+  editableId: '',
   isPending: false,
   errorMessage: '',
 }
@@ -44,6 +45,6 @@ export const speakersSlice = createSlice({
   },
 })
 
-export const { setSpeakers, se } = speakersSlice.actions
+export const { setSpeakers, setSpeakerOptions } = speakersSlice.actions
 
 export default speakersSlice.reducer

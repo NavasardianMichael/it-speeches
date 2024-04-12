@@ -1,9 +1,9 @@
 import { appFetch } from 'helpers/utils/api'
 import { Conference } from '@store/conferences/types'
-import { TEMP_IDS } from '@helpers/constants/store'
 import { PartialButRequired } from '@helpers/types/commons'
 import { processConferences } from './processors'
 import { ConferenceResponse, GetConferencesResponse } from './types'
+import { TEMP_IDS } from '@helpers/constants/defaults'
 
 export const getConferences = async () => {
   console.log('called getConferences')
@@ -18,9 +18,9 @@ export const getConferences = async () => {
   return processed
 }
 
-export const setConferenceOptions = async (options: PartialButRequired<Conference, 'id'>) => {
+export const postConferenceOptions = async (options: PartialButRequired<Conference, 'id'>) => {
   const response = await appFetch<ConferenceResponse>({
-    url: `${import.meta.env.VITE_APP_BASE_URL}speakers`,
+    url: `${import.meta.env.VITE_APP_BASE_URL}conferences`,
     params: {
       method: options.id === TEMP_IDS.conferences ? 'POST' : 'PATCH',
       headers: { 'Content-Type': 'application/json' },
