@@ -4,6 +4,7 @@ import { Card, Flex } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import { FC } from 'react'
 import { Description } from './Description'
+import styles from './styles.module.css'
 
 type Props = unknown
 
@@ -16,14 +17,16 @@ export const ConferencesList: FC<Props> = () => {
       conferences.allIds.map(conferenceId => {
         const conference = conferences.byId[conferenceId]
         return (
-          <Card
-            key={conferenceId}
-            hoverable
-            style={{ width: 240 }}
-            cover={<img alt="example" src={conference.image} />}
-          >
-            <Meta title={conference.name} description={<Description details={conference} />} />
-          </Card> 
+          <div className={styles.conference}>
+            <Card
+              key={conferenceId}
+              hoverable
+              style={{ width: 300 }}
+              cover={<img alt="example" src={conference.image} />}
+            >
+              <Meta title={conference.name} description={<Description details={conference} />} />
+            </Card> 
+          </div>
         )
       })
     }

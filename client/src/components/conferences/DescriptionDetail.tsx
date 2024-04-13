@@ -14,7 +14,7 @@ export const DescriptionDetail: FC<Props> = ({ name, value }) => {
             <Typography.Text strong>
                 {name}:&nbsp;
             </Typography.Text>
-            <Typography.Text>
+            <Typography.Text ellipsis>
                 {value}
             </Typography.Text>
         </Typography.Paragraph>
