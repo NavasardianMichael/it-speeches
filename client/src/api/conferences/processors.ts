@@ -6,8 +6,8 @@ import { GetConferencesResponse } from './types'
 export const processConferences = (response: GetConferencesResponse) => {
   return response.reduce(
     (acc, conference) => {
-      console.log({conference});
-      
+      console.log({ conference })
+
       const processedConference = processResponseRow(conference) as Conference
       acc.byId[processedConference.id] = processedConference
       acc.allIds.push(processedConference.id)

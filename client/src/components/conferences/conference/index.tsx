@@ -17,11 +17,10 @@ export const Conference: FC<Props> = ({ data, onClick, isPending }) => {
       <Skeleton
         title
         active
-        round
         className={styles.item}
-        avatar={{ size: 'large' }}
+        avatar={{ size: 'large', shape: 'square' }}
         paragraph={{ rows: 5 }}
-        style={{padding: 8}}
+        style={{ padding: 8, border: '1px solid #f0f0f0', borderRadius: 8 }}
       />
     )
 

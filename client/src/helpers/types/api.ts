@@ -1,5 +1,5 @@
 export type ResponseRowBase = { _id: string; __v: number }
 
-export type ResponseRow = Record<string, unknown> & ResponseRowBase
+export type ResponseRow<T> = Omit<T, 'id'> & ResponseRowBase
 
 export type ResponseForEntity<T> = Exclude<T, 'id'> & ResponseRowBase

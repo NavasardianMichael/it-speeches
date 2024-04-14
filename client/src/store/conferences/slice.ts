@@ -29,11 +29,9 @@ export const conferencesSlice = createSlice({
     },
     setConferenceOptions: (state, { payload }: PayloadAction<ConferenceActionPayloads['setConferenceOptions']>) => {
       state.byId[payload.id] = {
-        ...state.byId[payload.id] ?? {},
+        ...(state.byId[payload.id] ?? {}),
         ...payload,
       }
-      console.log({edited: JSON.parse(JSON.stringify(state.byId[payload.id]))});
-      
     },
     setEditableId: (state, { payload }: PayloadAction<ConferenceActionPayloads['setEditableId']>) => {
       state.editableId = payload
@@ -54,8 +52,8 @@ export const conferencesSlice = createSlice({
         state.isPending = false
       })
       .addMatcher(conferencesActionTypeMatcher('/rejected'), (state, action: PayloadAction<Error>) => {
-        console.log('Error:', { action });
-        
+        console.error('Error:', { action })
+
         state.isPending = false
         state.errorMessage = action.payload.message
       })

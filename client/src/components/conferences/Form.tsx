@@ -29,7 +29,7 @@ export const ConferenceForm: FC<Props> = () => {
   }, [editableConference])
 
   const onTextChange: InputProps['onChange'] = (e) => {
-    setEditedConferenceOptions(prev => ({
+    setEditedConferenceOptions((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
@@ -49,14 +49,9 @@ export const ConferenceForm: FC<Props> = () => {
   }
 
   return (
-    <Form layout="vertical" style={{width: '30%'}} disabled={isConferncesPending} onFinish={submitConderence}>
+    <Form layout="vertical" style={{ width: '30%' }} disabled={isConferncesPending} onFinish={submitConderence}>
       <Form.Item label="Name">
-        <Input
-          placeholder="Name"
-          value={editedConference.name}
-          onChange={onTextChange}
-          name="name"
-        />
+        <Input placeholder="Name" value={editedConference.name} onChange={onTextChange} name="name" />
       </Form.Item>
       <Form.Item label="Location">
         <Input
@@ -77,7 +72,12 @@ export const ConferenceForm: FC<Props> = () => {
             style={{ marginBottom: 12 }}
           />
         )}
-        <Button type="dashed" icon={<FileImageOutlined />} style={{ display: 'block' }} onClick={handleGenerateRandomImageClick}>
+        <Button
+          type="dashed"
+          icon={<FileImageOutlined />}
+          style={{ display: 'block' }}
+          onClick={handleGenerateRandomImageClick}
+        >
           Generate Random Avatar
         </Button>
       </Form.Item>
@@ -94,7 +94,7 @@ export const ConferenceForm: FC<Props> = () => {
         />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" >
+        <Button type="primary" htmlType="submit">
           Save
         </Button>
       </Form.Item>

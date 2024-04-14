@@ -1,22 +1,16 @@
-import { Typography } from 'antd'
 import { FC, ReactNode } from 'react'
+import { Typography } from 'antd'
 
 type Props = {
-    name: string
-    value: ReactNode
+  name: string
+  value: ReactNode
 }
 
 export const DescriptionDetail: FC<Props> = ({ name, value }) => {
-    if(!value) return null;
-
-    return (
-        <Typography.Paragraph ellipsis style={{marginBottom: 0}}>
-            <Typography.Text strong>
-                {name}:&nbsp;
-            </Typography.Text>
-            <Typography.Text>
-                {value}
-            </Typography.Text>
-        </Typography.Paragraph>
-    )
+  return (
+    <Typography.Paragraph ellipsis style={{ marginBottom: 0 }}>
+      <Typography.Text strong>{name}:&nbsp;</Typography.Text>
+      <Typography.Text>{value || '-'}</Typography.Text>
+    </Typography.Paragraph>
+  )
 }

@@ -16,7 +16,7 @@ router.post("/conferences", async (req, res) => {
 router.patch("/conferences", async (req, res) => {
   const partialConference = req.body
   const existingConference = await ConferenceModel.findById(partialConference.id)
-  console.log({existingConference});
+
   
   const updatedConference = { ...existingConference?.toObject(), ...req.body } 
   console.log({updatedConference});

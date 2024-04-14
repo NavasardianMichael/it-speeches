@@ -25,7 +25,7 @@ export const ConferencesList: FC<Props> = () => {
   )
 
   return (
-    <Flex gap="small" wrap="wrap" style={{ width: 'calc(70% - 16px)', minWidth: 800 }}>
+    <Flex gap="small" wrap="wrap" style={{ width: '100%', minWidth: 800 }}>
       {conferences.allIds.map((conferenceId) => {
         const conference = conferences.byId[conferenceId]
         return (
