@@ -1,4 +1,4 @@
-import { appFetch } from 'helpers/utils/api'
+import { appFetch, processResponseRow } from 'helpers/utils/api'
 import { Conference } from '@store/conferences/types'
 import { PartialButRequired } from '@helpers/types/commons'
 import { processConferences } from './processors'
@@ -27,7 +27,7 @@ export const postConferenceOptions = async (options: PartialButRequired<Conferen
       body: JSON.stringify(options),
     },
   })
-  console.log({ response })
+  const processedConference = processResponseRow(response)
 
-  return response
+  return processedConference
 }

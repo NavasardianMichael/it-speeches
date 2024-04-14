@@ -3,7 +3,7 @@ import { createAppAsyncThunk } from '@helpers/utils/store'
 import { setConferenceOptions, setConferences } from './slice'
 import { Conference } from './types'
 
-export const getConferencesAsync = createAppAsyncThunk<unknown, unknown>(
+export const getConferencesAsync = createAppAsyncThunk(
   'conferences/getConferencesAsync',
   async (_, { dispatch, rejectWithValue }) => {
     try {

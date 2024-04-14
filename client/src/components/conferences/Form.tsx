@@ -1,14 +1,14 @@
-import { FC, MouseEventHandler } from 'react'
-import { Button, Form, Image, Input, InputProps, Select, SelectProps } from 'antd'
-import { selectSpeeches } from '@store/speeches/selectors'
-import { useAppSelector } from '@hooks/useAppSelector'
-import { useAppDispatch } from '@hooks/useAppDispatch'
-import { setConferenceOptions } from '@store/conferences/slice'
-import { selectEditableConference, selectEditableId } from '@store/conferences/selectors'
-import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
-import { STATE_SLICE_NAMES } from '@helpers/constants/store'
+import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { FileImageOutlined } from '@ant-design/icons'
+import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
+import { selectEditableConference, selectEditableId, selectIsConferncesPending } from '@store/conferences/selectors'
+import { setConferenceOptions } from '@store/conferences/slice'
 import { setConferenceOptionsAsync } from '@store/conferences/thunks'
+import { selectSpeeches } from '@store/speeches/selectors'
+import { useAppDispatch } from '@hooks/useAppDispatch'
+import { useAppSelector } from '@hooks/useAppSelector'
+import { STATE_SLICE_NAMES } from '@helpers/constants/store'
+import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
 
 type Props = unknown
 
@@ -17,58 +17,75 @@ export const ConferenceForm: FC<Props> = () => {
   const dispatch = useAppDispatch()
   const editableId = useAppSelector(selectEditableId)
   const editableConference = useAppSelector(selectEditableConference)
+  const isConferncesPending = useAppSelector(selectIsConferncesPending)
+  const [editedConference, setEditedConferenceOptions] = useState(editableConference)
   const handleChange: SelectProps['onChange'] = (value, option) => {
     console.log({ value, option })
     // dispatch(setConferenceOptions())
   }
 
+  useEffect(() => {
+    setEditedConferenceOptions(editableConference)
+  }, [editableConference])
+
   const onTextChange: InputProps['onChange'] = (e) => {
-    dispatch(setConferenceOptions({
-        id: editableId,
-        [e.target.name]: e.target.value
+    setEditedConferenceOptions(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
     }))
   }
 
   const handleGenerateRandomImageClick: MouseEventHandler<HTMLElement> = () => {
-    dispatch(setConferenceOptions({
+    dispatch(
+      setConferenceOptions({
         id: editableId,
-        image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.conferences)
-    }))
+        image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.conferences),
+      })
+    )
   }
 
-  const handleSaveNewConferenceClick: MouseEventHandler<HTMLElement> = () => {
-    dispatch(setConferenceOptionsAsync(editableConference))
+  const submitConderence: FormProps['onFinish'] = () => {
+    dispatch(setConferenceOptionsAsync(editedConference))
   }
 
   return (
-    <Form style={{ flexGrow: 1 }} layout="vertical">
-      <Form.Item style={{ width: '100%' }} label="Name">
-        <Input style={{ width: '100%' }}  placeholder="Name" value={editableConference.name} onChange={onTextChange} name="name" />
+    <Form layout="vertical" style={{width: '30%'}} disabled={isConferncesPending} onFinish={submitConderence}>
+      <Form.Item label="Name">
+        <Input
+          placeholder="Name"
+          value={editedConference.name}
+          onChange={onTextChange}
+          name="name"
+        />
       </Form.Item>
       <Form.Item label="Location">
-        <Input placeholder="input placeholder" value={editableConference.location} onChange={onTextChange} name="location" />
+        <Input
+          placeholder="input placeholder"
+          value={editedConference.location}
+          onChange={onTextChange}
+          name="location"
+        />
       </Form.Item>
       <Form.Item label="Date">
-        <Input placeholder="input placeholder" value={editableConference.date} onChange={onTextChange} name="date" />
+        <Input placeholder="input placeholder" value={editedConference.date} onChange={onTextChange} name="date" />
       </Form.Item>
       <Form.Item label="Image">
-        {
-            editableConference.image &&
-            <Image
-                src={editableConference.image}
-                alt={`Conference named "${editableConference.name} || 'Conference Image'"`}
-                style={{marginBottom: 12}}
-            />
-        }
-        <Button type="dashed" icon={<FileImageOutlined />}  onClick={handleGenerateRandomImageClick}>
-            Generate Random Avatar
+        {editedConference.image && (
+          <Image
+            src={editedConference.image}
+            alt={`Conference named "${editedConference.name} || 'Conference Image'"`}
+            style={{ marginBottom: 12 }}
+          />
+        )}
+        <Button type="dashed" icon={<FileImageOutlined />} style={{ display: 'block' }} onClick={handleGenerateRandomImageClick}>
+          Generate Random Avatar
         </Button>
       </Form.Item>
       <Form.Item label="Speeches">
         <Select
           mode="tags"
           placeholder="Please select"
-          value={editableConference.speechIds}
+          value={editedConference.speechIds}
           onChange={handleChange}
           options={speeches.allIds.map((id) => ({
             value: id,
@@ -77,7 +94,9 @@ export const ConferenceForm: FC<Props> = () => {
         />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" onClick={handleSaveNewConferenceClick}>Save</Button>
+        <Button type="primary" htmlType="submit" >
+          Save
+        </Button>
       </Form.Item>
     </Form>
   )

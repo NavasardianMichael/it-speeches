@@ -10,11 +10,11 @@ export const DescriptionDetail: FC<Props> = ({ name, value }) => {
     if(!value) return null;
 
     return (
-        <Typography.Paragraph style={{marginBottom: 0}}>
+        <Typography.Paragraph ellipsis style={{marginBottom: 0}}>
             <Typography.Text strong>
                 {name}:&nbsp;
             </Typography.Text>
-            <Typography.Text ellipsis>
+            <Typography.Text>
                 {value}
             </Typography.Text>
         </Typography.Paragraph>

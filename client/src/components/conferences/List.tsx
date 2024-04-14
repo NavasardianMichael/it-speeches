@@ -1,40 +1,40 @@
 import { FC, MouseEventHandler, useCallback } from 'react'
-import { Card, Flex } from 'antd'
-import Meta from 'antd/es/card/Meta'
-import { selectConferences } from '@store/conferences/selectors'
-import { useAppSelector } from '@hooks/useAppSelector'
-import { Description } from './conference/description'
-import { useAppDispatch } from '@hooks/useAppDispatch'
+import { Flex } from 'antd'
+import { selectConferences, selectEditableId, selectIsConferncesPending } from '@store/conferences/selectors'
 import { setEditableId } from '@store/conferences/slice'
-import { Conference } from '@store/conferences/types'
+import { Conference as ConferenceType } from '@store/conferences/types'
+import { useAppDispatch } from '@hooks/useAppDispatch'
+import { useAppSelector } from '@hooks/useAppSelector'
+import { Conference } from './conference'
 
 type Props = unknown
 
 export const ConferencesList: FC<Props> = () => {
   const dispatch = useAppDispatch()
   const conferences = useAppSelector(selectConferences)
-  
-  const handleEditConference: MouseEventHandler<HTMLDivElement> = useCallback((e) => {
-    const conferenceId = e.currentTarget.dataset.conferenceId as Conference['id']
-    console.log({conferenceId});
-    dispatch(setEditableId(conferenceId))
-  }, [dispatch])
+  const editableId = useAppSelector(selectEditableId)
+  const isConferncesPending = useAppSelector(selectIsConferncesPending)
+
+  const handleEditConference: MouseEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      const conferenceId = e.currentTarget.dataset.conferenceId as ConferenceType['id']
+      console.log({ conferenceId })
+      dispatch(setEditableId(conferenceId))
+    },
+    [dispatch]
+  )
 
   return (
-    <Flex gap="middle">
+    <Flex gap="small" wrap="wrap" style={{ width: 'calc(70% - 16px)', minWidth: 800 }}>
       {conferences.allIds.map((conferenceId) => {
         const conference = conferences.byId[conferenceId]
         return (
-          <Card
-            key={conferenceId}
-            hoverable
+          <Conference
+            key={conference.id}
+            data={conference}
             onClick={handleEditConference}
-            data-conference-id={conferenceId}
-            style={{ width: '30%' }}
-            cover={<img alt="example" src={conference.image} style={{width: '100%'}} />}
-          >
-            <Meta title={conference.name} description={<Description details={conference} />} />
-          </Card>
+            isPending={editableId === conference.id && isConferncesPending}
+          />
         )
       })}
     </Flex>

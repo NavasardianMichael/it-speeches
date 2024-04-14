@@ -12,7 +12,6 @@ export const appFetch = async <ExpectedResponse>({
   queryParams,
   params,
 }: TFetchArgs): Promise<ExpectedResponse> => {
-  console.log({ params })
   const combinedQueryParams = queryParams ? objectToQueryString(queryParams) : ''
 
   const response = await fetch(url + combinedQueryParams, params)

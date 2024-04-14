@@ -28,12 +28,12 @@ export const conferencesSlice = createSlice({
       state.allIds.push(payload.id)
     },
     setConferenceOptions: (state, { payload }: PayloadAction<ConferenceActionPayloads['setConferenceOptions']>) => {
-      console.log({payload,state: JSON.parse(JSON.stringify(state))});
-      
       state.byId[payload.id] = {
         ...state.byId[payload.id] ?? {},
         ...payload,
       }
+      console.log({edited: JSON.parse(JSON.stringify(state.byId[payload.id]))});
+      
     },
     setEditableId: (state, { payload }: PayloadAction<ConferenceActionPayloads['setEditableId']>) => {
       state.editableId = payload
