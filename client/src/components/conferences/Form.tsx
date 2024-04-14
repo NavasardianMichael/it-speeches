@@ -41,9 +41,9 @@ export const ConferenceForm: FC<Props> = () => {
   }
 
   return (
-    <Form style={{ maxWidth: 400 }} layout="vertical">
-      <Form.Item label="Name">
-        <Input placeholder="Name" value={editableConference.name} onChange={onTextChange} name="name" />
+    <Form style={{ flexGrow: 1 }} layout="vertical">
+      <Form.Item style={{ width: '100%' }} label="Name">
+        <Input style={{ width: '100%' }}  placeholder="Name" value={editableConference.name} onChange={onTextChange} name="name" />
       </Form.Item>
       <Form.Item label="Location">
         <Input placeholder="input placeholder" value={editableConference.location} onChange={onTextChange} name="location" />
