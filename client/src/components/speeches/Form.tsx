@@ -19,8 +19,19 @@ export const SpeechForm: FC<Props> = () => {
   const editableSpeech = useAppSelector(selectEditableSpeech)
   const isSpeechesPending = useAppSelector(selectIsSpeechesPending)
   const [editedSpeech, setEditedSpeechOptions] = useState(editableSpeech)
-  const handleChange: SelectProps['onChange'] = (value, option) => {
-    console.log({ value, option })
+
+  const handleConferenceSelect: SelectProps['onChange'] = (value) => {
+    setEditedSpeechOptions((prev) => ({
+      ...prev,
+      conferenceId: value,
+    }))
+  }
+
+  const handleSpeakerSelect: SelectProps['onChange'] = (value) => {
+    setEditedSpeechOptions((prev) => ({
+      ...prev,
+      speakerId: value,
+    }))
   }
 
   useEffect(() => {
@@ -44,7 +55,6 @@ export const SpeechForm: FC<Props> = () => {
   const submitSpeech: FormProps['onFinish'] = () => {
     dispatch(setSpeechOptionsAsync(editedSpeech))
   }
-console.log({editedSpeech});
 
   return (
     <Form layout="vertical" style={{ width: '100%', maxWidth: 400 }} disabled={isSpeechesPending} onFinish={submitSpeech}>
@@ -80,7 +90,7 @@ console.log({editedSpeech});
         <Select
           placeholder="Select the conference"
           value={editedSpeech.conferenceId}
-          onChange={handleChange}
+          onChange={handleConferenceSelect}
           options={conferences.allIds.map((id) => ({
             value: id,
             label: conferences.byId[id].name,
@@ -91,7 +101,7 @@ console.log({editedSpeech});
         <Select
           placeholder="Select the speaker"
           value={editedSpeech.speakerId}
-          onChange={handleChange}
+          onChange={handleSpeakerSelect}
           options={speakers.allIds.map((id) => ({
             value: id,
             label: speakers.byId[id].fullName,

@@ -26,3 +26,11 @@ export const processSpeechResponseRow = (row: ResponseRow<Speech>): Speech => {
     ...rest,
   }
 }
+
+export const processSpeechRowPayload = (row: Speech) => {
+  return {
+    ...row,
+    conferenceId: row.conferenceId || null, 
+    speakerId: row.speakerId || null, 
+  }
+}

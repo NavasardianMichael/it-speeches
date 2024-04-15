@@ -13,7 +13,7 @@ export const getSpeechesAsync = createAppAsyncThunk(
 
       return data
     } catch (e) {
-      const error = e as globalThis.Error
+      const error = e as Error
       rejectWithValue(error)
     }
   }

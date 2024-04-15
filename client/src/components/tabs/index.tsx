@@ -5,6 +5,7 @@ import { useAppDispatch } from '@hooks/useAppDispatch'
 import { Conferences } from '@components/conferences'
 import { Speakers } from '@components/speakers'
 import { Speeches } from '@components/speeches'
+import { getSpeechesAsync } from '@store/speeches/thunks'
 
 const items: TabsProps['items'] = [
   {
@@ -29,6 +30,8 @@ export const Tabs: React.FC = () => {
 
   useEffect(() => {
     dispatch(getConferencesAsync())
+    dispatch(getSpeechesAsync())
+    
   }, [dispatch])
 
   return <MUITabs defaultActiveKey="1" items={items} />
