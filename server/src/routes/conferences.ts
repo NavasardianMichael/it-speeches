@@ -19,7 +19,6 @@ router.patch("/conferences", async (req, res) => {
 
   
   const updatedConference = { ...existingConference?.toObject(), ...req.body } 
-  console.log({updatedConference});
   const conference = await ConferenceModel.findByIdAndUpdate(
     partialConference.id,
     updatedConference,

@@ -1,5 +1,5 @@
 import { FC, MouseEventHandler } from 'react'
-import { Card, Skeleton } from 'antd'
+import { Card, Image, Skeleton } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import { ConferenceSlice, Conference as ConferenceType } from '@store/conferences/types'
 import { Description } from './description'
@@ -31,7 +31,15 @@ export const Conference: FC<Props> = ({ data, onClick, isPending }) => {
         onClick={onClick}
         data-conference-id={data.id}
         className={styles.item}
-        cover={<img alt="example" src={data.image} style={{ width: '100%' }} />}
+        cover={
+          <Image
+            preview={false}
+            alt={`Image of conference "${data.name || '-'}"`}
+            src={data.image}
+            style={{ width: '100%' }}
+            fallback="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
+          />
+        }
       >
         <Meta title={data.name} description={<Description details={data} />} />
       </Card>

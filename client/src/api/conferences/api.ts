@@ -14,7 +14,10 @@ export const getConferences = async () => {
   return processed
 }
 
-export const postConferenceOptions = async (options: PartialButRequired<Conference, 'id'>, isNewConference: boolean) => {
+export const postConferenceOptions = async (
+  options: PartialButRequired<Conference, 'id'>,
+  isNewConference: boolean
+) => {
   const response = await appFetch<ConferenceResponse>({
     url: `${import.meta.env.VITE_APP_BASE_URL}conferences`,
     params: {

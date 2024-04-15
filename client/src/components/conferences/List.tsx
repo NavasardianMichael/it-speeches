@@ -18,7 +18,6 @@ export const ConferencesList: FC<Props> = () => {
   const handleEditConference: MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {
       const conferenceId = e.currentTarget.dataset.conferenceId as ConferenceType['id']
-      console.log({ conferenceId })
       dispatch(setEditableId(conferenceId))
     },
     [dispatch]

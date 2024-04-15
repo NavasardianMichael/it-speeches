@@ -6,10 +6,6 @@ import { Conferences } from '@components/conferences'
 import { Speakers } from '@components/speakers'
 import { Speeches } from '@components/speeches'
 
-const onChange = (key: string) => {
-  console.log(key)
-}
-
 const items: TabsProps['items'] = [
   {
     key: '1',
@@ -35,5 +31,5 @@ export const Tabs: React.FC = () => {
     dispatch(getConferencesAsync())
   }, [dispatch])
 
-  return <MUITabs defaultActiveKey="1" items={items} onChange={onChange} />
+  return <MUITabs defaultActiveKey="1" items={items} />
 }

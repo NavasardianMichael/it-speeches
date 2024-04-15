@@ -1,6 +1,6 @@
+import { Conference } from '@store/conferences/types'
 import { ResponseRow } from '@helpers/types/api'
 import { objectToQueryString } from './commons'
-import { Conference } from '@store/conferences/types'
 
 type TFetchArgs = {
   url: string

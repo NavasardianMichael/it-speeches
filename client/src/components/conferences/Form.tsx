@@ -1,8 +1,7 @@
 import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
-import { selectEditableConference, selectEditableId, selectIsConferncesPending } from '@store/conferences/selectors'
-import { setConferenceOptions } from '@store/conferences/slice'
+import { selectEditableConference, selectIsConferncesPending } from '@store/conferences/selectors'
 import { setConferenceOptionsAsync } from '@store/conferences/thunks'
 import { selectSpeeches } from '@store/speeches/selectors'
 import { useAppDispatch } from '@hooks/useAppDispatch'
@@ -15,7 +14,6 @@ type Props = unknown
 export const ConferenceForm: FC<Props> = () => {
   const speeches = useAppSelector(selectSpeeches)
   const dispatch = useAppDispatch()
-  const editableId = useAppSelector(selectEditableId)
   const editableConference = useAppSelector(selectEditableConference)
   const isConferncesPending = useAppSelector(selectIsConferncesPending)
   const [editedConference, setEditedConferenceOptions] = useState(editableConference)
@@ -36,12 +34,10 @@ export const ConferenceForm: FC<Props> = () => {
   }
 
   const handleGenerateRandomImageClick: MouseEventHandler<HTMLElement> = () => {
-    dispatch(
-      setConferenceOptions({
-        id: editableId,
-        image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.conferences),
-      })
-    )
+    setEditedConferenceOptions((prev) => ({
+      ...prev,
+      image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.conferences),
+    }))
   }
 
   const submitConderence: FormProps['onFinish'] = () => {
@@ -51,7 +47,7 @@ export const ConferenceForm: FC<Props> = () => {
   return (
     <Form layout="vertical" style={{ width: '30%' }} disabled={isConferncesPending} onFinish={submitConderence}>
       <Form.Item label="Name">
-        <Input placeholder="Name" value={editedConference.name} onChange={onTextChange} name="name" />
+        <Input required placeholder="Name" value={editedConference.name} onChange={onTextChange} name="name" />
       </Form.Item>
       <Form.Item label="Location">
         <Input
@@ -62,7 +58,7 @@ export const ConferenceForm: FC<Props> = () => {
         />
       </Form.Item>
       <Form.Item label="Date">
-        <Input placeholder="input placeholder" value={editedConference.date} onChange={onTextChange} name="date" />
+        <Input placeholder="Date" value={editedConference.date} onChange={onTextChange} name="date" />
       </Form.Item>
       <Form.Item label="Image">
         {editedConference.image && (
@@ -78,7 +74,7 @@ export const ConferenceForm: FC<Props> = () => {
           style={{ display: 'block' }}
           onClick={handleGenerateRandomImageClick}
         >
-          Generate Random Avatar
+          Generate an image
         </Button>
       </Form.Item>
       <Form.Item label="Speeches">

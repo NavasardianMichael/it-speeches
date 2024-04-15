@@ -1,8 +1,8 @@
 import { getConferences, postConferenceOptions } from '@api/conferences/api'
+import { TEMP_IDS } from '@helpers/constants/defaults'
 import { createAppAsyncThunk } from '@helpers/utils/store'
 import { addConference, setConferenceOptions, setConferences } from './slice'
 import { Conference } from './types'
-import { TEMP_IDS } from '@helpers/constants/defaults'
 
 export const getConferencesAsync = createAppAsyncThunk(
   'conferences/getConferencesAsync',
@@ -23,11 +23,7 @@ export const setConferenceOptionsAsync = createAppAsyncThunk<unknown, Conference
     try {
       const isNewConference = conference.id === TEMP_IDS.conferences
       const data = await postConferenceOptions(conference, isNewConference)
-      dispatch(
-        isNewConference ?
-        addConference(data) :
-        setConferenceOptions(data)
-      )
+      dispatch(isNewConference ? addConference(data) : setConferenceOptions(data))
     } catch (e) {
       const error = e as Error
       rejectWithValue(error)
