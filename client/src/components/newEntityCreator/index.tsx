@@ -1,9 +1,9 @@
 import { FC, MouseEventHandler, memo } from 'react'
 import PlusOutlined from '@ant-design/icons/PlusOutlined'
 import { Button, Typography } from 'antd'
-import { setConferenceOptions, setEditableId } from '@store/conferences/slice'
-import { setSpeakerOptions } from '@store/speakers/slice'
-import { setSpeechOptions } from '@store/speeches/slice'
+import { setConferenceOptions, setEditableConferenceId } from '@store/conferences/slice'
+import { setEditableSpeakerId, setSpeakerOptions } from '@store/speakers/slice'
+import { setEditableSpeechId, setSpeechOptions } from '@store/speeches/slice'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { NEW_ENTITY_INITIAL_STATES, TEMP_IDS } from '@helpers/constants/defaults'
 import { STATE_SLICE_NAMES } from '@helpers/constants/store'
@@ -14,20 +14,28 @@ type Props = {
   entity: StateSliceName
 }
 
-const entityOptionsSetterByEntityType = {
+const EDITABLE_ENTITY_ID_SETTER = {
+  [STATE_SLICE_NAMES.conferences]: setEditableConferenceId,
+  [STATE_SLICE_NAMES.speeches]: setEditableSpeechId,
+  [STATE_SLICE_NAMES.speakers]: setEditableSpeakerId,
+}
+
+const OPTIONS_SETTER_BY_ENTITY = {
   [STATE_SLICE_NAMES.conferences]: setConferenceOptions,
   [STATE_SLICE_NAMES.speeches]: setSpeechOptions,
   [STATE_SLICE_NAMES.speakers]: setSpeakerOptions,
 }
 
+
 export const NewEntityCreator: FC<Props> = memo(({ entity }) => {
   const dispatch = useAppDispatch()
-  const actionCreator = entityOptionsSetterByEntityType[entity]
+  const editableIdSetter = EDITABLE_ENTITY_ID_SETTER[entity]
+  const optionsSetter = OPTIONS_SETTER_BY_ENTITY[entity]
   const action = NEW_ENTITY_INITIAL_STATES[entity]
 
   const handleClick: MouseEventHandler<HTMLElement> = () => {
-    dispatch(setEditableId(TEMP_IDS.conferences))
-    dispatch(actionCreator(action))
+    dispatch(editableIdSetter(TEMP_IDS[entity]))
+    dispatch(optionsSetter(action))
   }
 
   return (

@@ -33,18 +33,12 @@ export const conferencesSlice = createSlice({
         ...payload,
       }
     },
-    setEditableId: (state, { payload }: PayloadAction<ConferenceActionPayloads['setEditableId']>) => {
+    setEditableConferenceId: (state, { payload }: PayloadAction<ConferenceActionPayloads['setEditableConferenceId']>) => {
       state.editableId = payload
     },
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(getUsersAsync.pending, (state, action) => {
-      //   state.isPending = true
-      // })
-      // .addCase(getUsersAsync.fulfilled, (state, action) => {
-      //   state.isPending = false
-      // })
       .addMatcher(conferencesActionTypeMatcher('/pending'), (state) => {
         state.isPending = true
       })
@@ -60,6 +54,6 @@ export const conferencesSlice = createSlice({
   },
 })
 
-export const { setConferences, addConference, setConferenceOptions, setEditableId } = conferencesSlice.actions
+export const { setConferences, addConference, setConferenceOptions, setEditableConferenceId } = conferencesSlice.actions
 
 export default conferencesSlice.reducer

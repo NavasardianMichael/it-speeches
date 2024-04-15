@@ -1,7 +1,7 @@
-import { appFetch, processResponseRow } from 'helpers/utils/api'
+import { appFetch } from 'helpers/utils/api'
 import { Conference } from '@store/conferences/types'
 import { PartialButRequired } from '@helpers/types/commons'
-import { processConferences } from './processors'
+import { processConferenceResponseRow, processConferences } from './processors'
 import { ConferenceResponse, GetConferencesResponse } from './types'
 
 export const getConferences = async () => {
@@ -27,7 +27,7 @@ export const postConferenceOptions = async (
     },
   })
 
-  const processedConference = processResponseRow(response)
+  const processedConference = processConferenceResponseRow(response)
 
   return processedConference
 }

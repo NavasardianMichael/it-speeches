@@ -17,5 +17,5 @@ export type ConferenceActionPayloads = {
   setConferences: Normalized<Conference>
   addConference: Conference
   setConferenceOptions: PartialButRequired<Conference, 'id'>
-  setEditableId: Conference['id']
+  setEditableConferenceId: Conference['id']
 }

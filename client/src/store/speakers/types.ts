@@ -14,5 +14,7 @@ export type Speaker = {
 
 export type SpeakersActionPayloads = {
   setSpeakers: Normalized<Speaker>
+  addSpeaker: Speaker
   setSpeakerOptions: PartialButRequired<Speaker, 'id'>
+  setEditableSpeakerId: Speaker['id']
 }

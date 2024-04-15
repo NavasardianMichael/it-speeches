@@ -1,9 +1,8 @@
 import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
-import { selectEditableConference, selectIsConferncesPending } from '@store/conferences/selectors'
+import { selectConferences, selectEditableConference, selectIsConferencesPending } from '@store/conferences/selectors'
 import { setConferenceOptionsAsync } from '@store/conferences/thunks'
-import { selectSpeeches } from '@store/speeches/selectors'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
 import { STATE_SLICE_NAMES } from '@helpers/constants/store'
@@ -12,10 +11,10 @@ import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
 type Props = unknown
 
 export const ConferenceForm: FC<Props> = () => {
-  const speeches = useAppSelector(selectSpeeches)
+  const conferences = useAppSelector(selectConferences)
   const dispatch = useAppDispatch()
   const editableConference = useAppSelector(selectEditableConference)
-  const isConferncesPending = useAppSelector(selectIsConferncesPending)
+  const isConferencesPending = useAppSelector(selectIsConferencesPending)
   const [editedConference, setEditedConferenceOptions] = useState(editableConference)
   const handleChange: SelectProps['onChange'] = (value, option) => {
     console.log({ value, option })
@@ -40,12 +39,12 @@ export const ConferenceForm: FC<Props> = () => {
     }))
   }
 
-  const submitConderence: FormProps['onFinish'] = () => {
+  const submitConference: FormProps['onFinish'] = () => {
     dispatch(setConferenceOptionsAsync(editedConference))
   }
 
   return (
-    <Form layout="vertical" style={{ width: '30%' }} disabled={isConferncesPending} onFinish={submitConderence}>
+    <Form layout="vertical" style={{ width: '30%' }} disabled={isConferencesPending} onFinish={submitConference}>
       <Form.Item label="Name">
         <Input required placeholder="Name" value={editedConference.name} onChange={onTextChange} name="name" />
       </Form.Item>
@@ -83,9 +82,9 @@ export const ConferenceForm: FC<Props> = () => {
           placeholder="Please select"
           value={editedConference.speechIds}
           onChange={handleChange}
-          options={speeches.allIds.map((id) => ({
+          options={conferences.allIds.map((id) => ({
             value: id,
-            label: speeches.byId[id].topic,
+            label: conferences.byId[id].name,
           }))}
         />
       </Form.Item>

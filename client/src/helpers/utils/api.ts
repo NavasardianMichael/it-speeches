@@ -1,5 +1,3 @@
-import { Conference } from '@store/conferences/types'
-import { ResponseRow } from '@helpers/types/api'
 import { objectToQueryString } from './commons'
 
 type TFetchArgs = {
@@ -19,13 +17,4 @@ export const appFetch = async <ExpectedResponse>({
 
   const data: ExpectedResponse = await response.json()
   return data
-}
-
-export const processResponseRow = (row: ResponseRow<Conference>): Conference => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { _id, __v, ...rest } = row
-  return {
-    id: _id,
-    ...rest,
-  }
 }

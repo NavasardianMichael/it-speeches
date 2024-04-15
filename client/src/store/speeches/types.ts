@@ -17,4 +17,6 @@ export type Speech = {
 export type SpeechesActionPayloads = {
   setSpeeches: Normalized<Speech>
   setSpeechOptions: PartialButRequired<Speech, 'id'>
+  addSpeech: Speech
+  setEditableSpeechId: Speech['id']
 }

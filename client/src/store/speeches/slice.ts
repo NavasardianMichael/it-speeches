@@ -23,11 +23,18 @@ export const speechesSlice = createSlice({
         ...payload,
       }
     },
+    addSpeech: (state, { payload }: PayloadAction<SpeechesActionPayloads['addSpeech']>) => {
+      state.byId[payload.id] = payload
+      state.allIds.push(payload.id)
+    },
     setSpeechOptions: (state, { payload }: PayloadAction<SpeechesActionPayloads['setSpeechOptions']>) => {
       state.byId[payload.id] = {
         ...state.byId[payload.id],
         ...payload,
       }
+    },
+    setEditableSpeechId: (state, { payload }: PayloadAction<SpeechesActionPayloads['setEditableSpeechId']>) => {
+      state.editableId = payload
     },
   },
   extraReducers: (builder) => {
@@ -45,6 +52,6 @@ export const speechesSlice = createSlice({
   },
 })
 
-export const { setSpeeches, setSpeechOptions } = speechesSlice.actions
+export const { setSpeeches, addSpeech, setSpeechOptions, setEditableSpeechId } = speechesSlice.actions
 
 export default speechesSlice.reducer

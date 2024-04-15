@@ -1,6 +1,8 @@
-import { getSpeeches } from '@api/speeches/api'
+import { getSpeeches, postSpeechOptions } from '@api/speeches/api'
 import { createAppAsyncThunk } from '@helpers/utils/store'
-import { setSpeeches } from './slice'
+import { addSpeech, setSpeechOptions, setSpeeches } from './slice'
+import { Speech } from './types'
+import { TEMP_IDS } from '@helpers/constants/defaults'
 
 export const getSpeechesAsync = createAppAsyncThunk(
   'speeches/getSpeechesAsync',
@@ -17,17 +19,17 @@ export const getSpeechesAsync = createAppAsyncThunk(
   }
 )
 
-// export const setUserOptionsAsync = createAppAsyncThunk(
-//   'users/setUserOptions',
-//   async (params: TUsersActionPayloads['setUserOptions'], { dispatch, rejectWithValue }) => {
-//     try {
-//       const data = await putUserOptions(params)
-//       dispatch(setUserOptions(data))
+export const setSpeechOptionsAsync = createAppAsyncThunk<unknown, Speech>(
+  'speeches/setSpeechOptionsAsync',
+  async (speech, { dispatch, rejectWithValue }) => {
+    try {
+      const isNewSpeech = speech.id === TEMP_IDS.speeches
+      const data = await postSpeechOptions(speech, isNewSpeech)
+      dispatch(isNewSpeech ? addSpeech(data) : setSpeechOptions(data))
+    } catch (e) {
+      const error = e as Error
+      rejectWithValue(error)
+    }
+  }
+)
 
-//       return data
-//     } catch (e) {
-//       const error = e as globalThis.Error
-//       rejectWithValue(error)
-//     }
-//   }
-// )
