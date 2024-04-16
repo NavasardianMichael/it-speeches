@@ -7,7 +7,7 @@ const ConferenceSchema = new Schema({
     location: String,
     date: String,
     image: String,
-    speechIds: [mongoose.Types.ObjectId]
+    speechIds: [String]
 });
 
 export const ConferenceModel = mongoose.model('Conference', ConferenceSchema)

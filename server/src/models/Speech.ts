@@ -6,8 +6,8 @@ const SpeechSchema = new Schema({
     topic: String,
     duration: String,
     image: String,
-    conferenceId: mongoose.Types.ObjectId,
-    speakerId: mongoose.Types.ObjectId,
+    conferenceId: String,
+    speakerId: String,
 });
 
 export const SpeechModel = mongoose.model('Speech', SpeechSchema)

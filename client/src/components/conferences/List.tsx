@@ -26,7 +26,7 @@ export const ConferencesList: FC<Props> = () => {
   if(!conferences.allIds.length) return null;
 
   return (
-    <Row gutter={12} style={{ width: '100%', minWidth: 800 }}>
+    <Row gutter={[12, 12]} style={{ width: '100%', minWidth: 800 }}>
       {conferences.allIds.map((conferenceId) => {
         const conference = conferences.byId[conferenceId]
         return (

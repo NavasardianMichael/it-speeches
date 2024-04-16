@@ -16,7 +16,7 @@ export const Description: FC<Props> = ({ details }) => {
       <DescriptionDetail name="Location" value={details.location} />
       <DescriptionDetail name="Date" value={details.date} />
       <DescriptionDetail
-        name="Speakers"
+        name="Speeches"
         value={details.speechIds.map((speechId) => speeches.byId[speechId].topic).join(', ')}
       />
     </Flex>

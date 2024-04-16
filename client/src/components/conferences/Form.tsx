@@ -7,17 +7,24 @@ import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
 import { STATE_SLICE_NAMES } from '@helpers/constants/store'
 import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
+import { selectSpeeches } from '@store/speeches/selectors'
 
 type Props = unknown
 
 export const ConferenceForm: FC<Props> = () => {
-  const conferences = useAppSelector(selectConferences)
+  const speeches = useAppSelector(selectSpeeches)
   const dispatch = useAppDispatch()
   const editableConference = useAppSelector(selectEditableConference)
   const isConferencesPending = useAppSelector(selectIsConferencesPending)
   const [editedConference, setEditedConferenceOptions] = useState(editableConference)
-  const handleChange: SelectProps['onChange'] = (value, option) => {
-    console.log({ value, option })
+
+  const handleSpeechSelect: SelectProps['onChange'] = (value, option) => {
+    console.log({value, option});
+    
+    setEditedConferenceOptions((prev) => ({
+      ...prev,
+      speechIds: value,
+    }))
   }
 
   useEffect(() => {
@@ -41,6 +48,7 @@ export const ConferenceForm: FC<Props> = () => {
   const submitConference: FormProps['onFinish'] = () => {
     dispatch(setConferenceOptionsAsync(editedConference))
   }
+console.log({speeches});
 
   return (
     <Form layout="vertical" style={{ width: '30%' }} disabled={isConferencesPending} onFinish={submitConference}>
@@ -80,10 +88,10 @@ export const ConferenceForm: FC<Props> = () => {
           mode="tags"
           placeholder="Please select"
           value={editedConference.speechIds}
-          onChange={handleChange}
-          options={conferences.allIds.map((id) => ({
+          onChange={handleSpeechSelect}
+          options={speeches.allIds.map((id) => ({
             value: id,
-            label: conferences.byId[id].name,
+            label: speeches.byId[id].topic,
           }))}
         />
       </Form.Item>

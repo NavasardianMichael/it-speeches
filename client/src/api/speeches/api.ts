@@ -17,7 +17,7 @@ export const getSpeeches = async () => {
 export const postSpeechOptions = async (
   options: PartialButRequired<Speech, 'id'>,
   isNewSpeech: boolean
-) => {
+) => {  
   const response = await appFetch<SpeechResponse>({
     url: `${import.meta.env.VITE_APP_BASE_URL}speeches`,
     params: {
