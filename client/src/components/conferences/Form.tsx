@@ -18,7 +18,6 @@ export const ConferenceForm: FC<Props> = () => {
   const [editedConference, setEditedConferenceOptions] = useState(editableConference)
   const handleChange: SelectProps['onChange'] = (value, option) => {
     console.log({ value, option })
-    // dispatch(setConferenceOptions())
   }
 
   useEffect(() => {
