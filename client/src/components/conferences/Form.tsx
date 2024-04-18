@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
-import { selectConferences, selectEditableConference, selectIsConferencesPending } from '@store/conferences/selectors'
+import { selectEditableConference, selectIsConferencesPending } from '@store/conferences/selectors'
 import { setConferenceOptionsAsync } from '@store/conferences/thunks'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
@@ -28,6 +28,8 @@ export const ConferenceForm: FC<Props> = () => {
   }
 
   useEffect(() => {
+    console.log({editableConference});
+    
     setEditedConferenceOptions(editableConference)
   }, [editableConference])
 

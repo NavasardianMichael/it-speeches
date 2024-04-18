@@ -9,9 +9,7 @@ import { Speech as SpeechType } from '@store/speeches/types'
 import { selectConferences } from '@store/conferences/selectors'
 import { selectSpeakers } from '@store/speakers/selectors'
 
-type Props = unknown
-
-export const SpeechesList: FC<Props> = () => {
+export const SpeechesList: FC = () => {
   const dispatch = useAppDispatch()
   const speeches = useAppSelector(selectSpeeches)
   const conferences = useAppSelector(selectConferences)
@@ -30,7 +28,7 @@ export const SpeechesList: FC<Props> = () => {
   if(!speeches.allIds.length) return null;
 
   return (
-    <Row gutter={[12, 12]} style={{ width: '100%', minWidth: 800 }}>
+    <Row gutter={[12, 12]} align={'stretch'} style={{ width: '100%', minWidth: 800 }}>
       {speeches.allIds.map((speechId) => {
         const speech = speeches.byId[speechId]
         return (

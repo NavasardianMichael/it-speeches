@@ -10,9 +10,7 @@ import { setSpeechOptionsAsync } from '@store/speeches/thunks'
 import { selectConferences } from '@store/conferences/selectors'
 import { selectSpeakers } from '@store/speakers/selectors'
 
-type Props = unknown
-
-export const SpeechForm: FC<Props> = () => {
+export const SpeechForm: FC = () => {
   const dispatch = useAppDispatch()
   const conferences = useAppSelector(selectConferences)
   const speakers = useAppSelector(selectSpeakers)
@@ -35,8 +33,14 @@ export const SpeechForm: FC<Props> = () => {
   }
 
   useEffect(() => {
+    console.log({editableSpeech});
+    
     setEditedSpeechOptions(editableSpeech)
   }, [editableSpeech])
+
+  useEffect(() => {
+    console.log({editedSpeech});
+  }, [editedSpeech])
 
   const onTextChange: InputProps['onChange'] = (e) => {
     setEditedSpeechOptions((prev) => ({

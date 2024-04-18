@@ -12,7 +12,7 @@ type Props = unknown
 
 export const Conferences: FC<Props> = () => {
   const isEditModeActive = useAppSelector(selectIsEditModeActive)
-
+  console.log({isEditModeActive});
   return (
     <div>
       <Title>Conferences</Title>

@@ -15,8 +15,8 @@ export const Description: FC<Props> = ({ details, conference, speaker }) => {
   return (
     <Flex gap="small" vertical style={{ marginTop: 12, whiteSpace: 'nowrap' }}>
       <DescriptionDetail name="Duration" value={details.duration} />
-      <DescriptionDetail name="Date" value={conference?.name} />
-      <DescriptionDetail name="Date" value={speaker?.fullName} />
+      <DescriptionDetail name="Conference" value={conference?.name} />
+      <DescriptionDetail name="Speaker" value={speaker?.fullName} />
     </Flex>
   )
 }
