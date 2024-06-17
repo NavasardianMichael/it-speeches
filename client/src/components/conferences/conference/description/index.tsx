@@ -11,6 +11,11 @@ type Props = {
 
 export const Description: FC<Props> = ({ details }) => {
   const speeches = useAppSelector(selectSpeeches)
+  console.log({
+    speeches,
+    details
+  });
+  
   return (
     <Flex gap="small" vertical style={{ marginTop: 12, whiteSpace: 'nowrap' }}>
       <DescriptionDetail name="Location" value={details.location} />

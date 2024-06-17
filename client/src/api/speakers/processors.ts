@@ -1,12 +1,12 @@
-import { Speaker } from '@store/speakers/types'
+import { ResponseRow } from '@helpers/types/api'
 import { Normalized } from '@helpers/types/commons'
-import { processResponseRow } from '@helpers/utils/api'
+import { Speaker } from '@store/speakers/types'
 import { GetSpeakersResponse } from './types'
 
 export const processSpeakers = (response: GetSpeakersResponse) => {
   return response.reduce(
     (acc, speaker) => {
-      const processedSpeaker = processResponseRow(speaker) as Speaker
+      const processedSpeaker = processSpeakerResponseRow(speaker) as Speaker
       acc.byId[speaker.id] = processedSpeaker
       acc.allIds.push(processedSpeaker.id)
       return acc
@@ -16,4 +16,13 @@ export const processSpeakers = (response: GetSpeakersResponse) => {
       allIds: [],
     } as Normalized<Speaker>
   )
+}
+
+export const processSpeakerResponseRow = (row: ResponseRow<Speaker>): Speaker => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _id, __v, ...rest } = row
+  return {
+    id: _id,
+    ...rest,
+  }
 }
