@@ -26,7 +26,6 @@ const OPTIONS_SETTER_BY_ENTITY = {
   [STATE_SLICE_NAMES.speakers]: setSpeakerOptions,
 }
 
-
 export const NewEntityCreator: FC<Props> = memo(({ entity }) => {
   const dispatch = useAppDispatch()
   const editableIdSetter = EDITABLE_ENTITY_ID_SETTER[entity]

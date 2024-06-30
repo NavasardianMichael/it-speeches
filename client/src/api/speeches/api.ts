@@ -1,6 +1,6 @@
-import { PartialButRequired } from '@helpers/types/commons'
-import { Speech } from '@store/speeches/types'
 import { appFetch } from 'helpers/utils/api'
+import { Speech } from '@store/speeches/types'
+import { PartialButRequired } from '@helpers/types/commons'
 import { processSpeechResponseRow, processSpeeches } from './processors'
 import { GetSpeechesResponse, SpeechResponse } from './types'
 
@@ -14,10 +14,7 @@ export const getSpeeches = async () => {
   return processed
 }
 
-export const postSpeechOptions = async (
-  options: PartialButRequired<Speech, 'id'>,
-  isNewSpeech: boolean
-) => {  
+export const postSpeechOptions = async (options: PartialButRequired<Speech, 'id'>, isNewSpeech: boolean) => {
   const response = await appFetch<SpeechResponse>({
     url: `${import.meta.env.VITE_APP_BASE_URL}speeches`,
     params: {

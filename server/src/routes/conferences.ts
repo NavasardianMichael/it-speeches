@@ -14,15 +14,16 @@ router.post("/conferences", async (req, res) => {
 });
 
 router.patch("/conferences", async (req, res) => {
-  const partialConference = req.body
-  const existingConference = await ConferenceModel.findById(partialConference.id)
+  const partialConference = req.body;
+  const existingConference = await ConferenceModel.findById(
+    partialConference.id,
+  );
 
-  
-  const updatedConference = { ...existingConference?.toObject(), ...req.body } 
+  const updatedConference = { ...existingConference?.toObject(), ...req.body };
   const conference = await ConferenceModel.findByIdAndUpdate(
     partialConference.id,
     updatedConference,
-    { new: true }
+    { new: true },
   );
   res.status(200).json(conference);
 });

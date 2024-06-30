@@ -33,7 +33,10 @@ export const conferencesSlice = createSlice({
         ...payload,
       }
     },
-    setEditableConferenceId: (state, { payload }: PayloadAction<ConferenceActionPayloads['setEditableConferenceId']>) => {
+    setEditableConferenceId: (
+      state,
+      { payload }: PayloadAction<ConferenceActionPayloads['setEditableConferenceId']>
+    ) => {
       state.editableId = payload
     },
   },

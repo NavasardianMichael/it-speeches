@@ -1,20 +1,20 @@
 import { FC, MouseEventHandler, useCallback } from 'react'
 import { Col, Row } from 'antd'
 import { selectConferences } from '@store/conferences/selectors'
-import { selectSpeakers } from '@store/speakers/selectors'
-import { selectEditableSpeechId, selectIsSpeechesPending, selectSpeeches } from '@store/speeches/selectors'
+import { selectEditableSpeakerId, selectSpeakers } from '@store/speakers/selectors'
+import { selectIsSpeechesPending, selectSpeeches } from '@store/speeches/selectors'
 import { setEditableSpeechId } from '@store/speeches/slice'
 import { Speech as SpeechType } from '@store/speeches/types'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
-import { Speech } from './speech'
+import { Speaker } from './speaker'
 
-export const SpeechesList: FC = () => {
+export const SpeakersList: FC = () => {
   const dispatch = useAppDispatch()
   const speeches = useAppSelector(selectSpeeches)
   const conferences = useAppSelector(selectConferences)
   const speakers = useAppSelector(selectSpeakers)
-  const editableId = useAppSelector(selectEditableSpeechId)
+  const editableId = useAppSelector(selectEditableSpeakerId)
   const isSpeechesPending = useAppSelector(selectIsSpeechesPending)
 
   const handleEditSpeech: MouseEventHandler<HTMLDivElement> = useCallback(
@@ -29,16 +29,15 @@ export const SpeechesList: FC = () => {
 
   return (
     <Row gutter={[12, 12]} align={'stretch'} style={{ width: '100%', minWidth: 800 }}>
-      {speeches.allIds.map((speechId) => {
-        const speech = speeches.byId[speechId]
+      {speakers.allIds.map((speakerId) => {
+        const speaker = speakers.byId[speakerId]
         return (
-          <Col key={speech.id} xs={24} sm={12} md={8} lg={6} xl={4}>
-            <Speech
-              speech={speech}
-              onClick={handleEditSpeech}
+          <Col key={speaker.id} xs={24} sm={12} md={8} lg={6} xl={4}>
+            <Speaker
+              speaker={speaker}
+              onClick={speaker}
               isPending={editableId === speech.id && isSpeechesPending}
-              conference={conferences.byId[speech.conferenceId]}
-              speaker={speakers.byId[speech.speakerId]}
+              conference={conferences.byId[speaker.conferenceId]}
             />
           </Col>
         )

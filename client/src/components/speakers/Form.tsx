@@ -2,76 +2,76 @@ import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
 import { selectConferences } from '@store/conferences/selectors'
-import { selectSpeakers } from '@store/speakers/selectors'
-import { selectEditableSpeech, selectIsSpeechesPending } from '@store/speeches/selectors'
+import { selectEditableSpeaker, selectIsSpeakersPending, selectSpeakers } from '@store/speakers/selectors'
+import { setSpeakerOptionsAsync } from '@store/speakers/thunks'
 import { setSpeechOptionsAsync } from '@store/speeches/thunks'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
 import { STATE_SLICE_NAMES } from '@helpers/constants/store'
 import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
 
-export const SpeechForm: FC = () => {
+export const SpeakerForm: FC = () => {
   const dispatch = useAppDispatch()
   const conferences = useAppSelector(selectConferences)
   const speakers = useAppSelector(selectSpeakers)
-  const editableSpeech = useAppSelector(selectEditableSpeech)
-  const isSpeechesPending = useAppSelector(selectIsSpeechesPending)
-  const [editedSpeech, setEditedSpeechOptions] = useState(editableSpeech)
+  const editableSpeaker = useAppSelector(selectEditableSpeaker)
+  const isSpeakersPending = useAppSelector(selectIsSpeakersPending)
+  const [editedSpeaker, setEditedSpeakerOptions] = useState(editableSpeaker)
 
   const handleConferenceSelect: SelectProps['onChange'] = (value) => {
-    setEditedSpeechOptions((prev) => ({
+    setEditedSpeakerOptions((prev) => ({
       ...prev,
       conferenceId: value,
     }))
   }
 
   const handleSpeakerSelect: SelectProps['onChange'] = (value) => {
-    setEditedSpeechOptions((prev) => ({
+    setEditedSpeakerOptions((prev) => ({
       ...prev,
       speakerId: value,
     }))
   }
 
   useEffect(() => {
-    setEditedSpeechOptions(editableSpeech)
-  }, [editableSpeech])
+    setEditedSpeakerOptions(editableSpeaker)
+  }, [editableSpeaker])
 
   const onTextChange: InputProps['onChange'] = (e) => {
-    setEditedSpeechOptions((prev) => ({
+    setEditedSpeakerOptions((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
   }
 
   const randomImageGeneratorClickHandler: MouseEventHandler<HTMLElement> = () => {
-    setEditedSpeechOptions((prev) => ({
+    setEditedSpeakerOptions((prev) => ({
       ...prev,
-      image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.speeches),
+      image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.speakers),
     }))
   }
 
-  const submitSpeech: FormProps['onFinish'] = () => {
-    dispatch(setSpeechOptionsAsync(editedSpeech))
+  const submitSpeaker: FormProps['onFinish'] = () => {
+    dispatch(setSpeakerOptionsAsync(editedSpeaker))
   }
 
   return (
     <Form
       layout="vertical"
       style={{ width: '100%', maxWidth: 400 }}
-      disabled={isSpeechesPending}
-      onFinish={submitSpeech}
+      disabled={isSpeakersPending}
+      onFinish={submitSpeaker}
     >
       <Form.Item label="Name">
-        <Input required placeholder="Topic" value={editedSpeech.topic} onChange={onTextChange} name="topic" />
+        <Input required placeholder="Topic" value={editedSpeaker.fullName} onChange={onTextChange} name="topic" />
       </Form.Item>
-      <Form.Item label="Location">
-        <Input placeholder="Duration" value={editedSpeech.duration} onChange={onTextChange} name="duration" />
+      <Form.Item label="Position">
+        <Input placeholder="Position" value={editedSpeaker.position} onChange={onTextChange} name="position" />
       </Form.Item>
       <Form.Item label="Image">
-        {editedSpeech.image && (
+        {editedSpeaker.image && (
           <Image
-            src={editedSpeech.image}
-            alt={`Speech with topic "${editedSpeech.topic} || 'Speech Image'"`}
+            src={editedSpeaker.image}
+            alt={`${editedSpeaker.fullName} || 'Picture of Speaker'`}
             style={{ marginBottom: 12 }}
           />
         )}
@@ -84,25 +84,14 @@ export const SpeechForm: FC = () => {
           Generate an image
         </Button>
       </Form.Item>
-      <Form.Item label="Conference">
+      <Form.Item label="Speeches">
         <Select
-          placeholder="Select the conference"
-          value={editedSpeech.conferenceId}
+          placeholder="Select speeches"
+          value={editedSpeaker.speechIds}
           onChange={handleConferenceSelect}
           options={conferences.allIds.map((id) => ({
             value: id,
             label: conferences.byId[id].name,
-          }))}
-        />
-      </Form.Item>
-      <Form.Item label="Speaker">
-        <Select
-          placeholder="Select the speaker"
-          value={editedSpeech.speakerId}
-          onChange={handleSpeakerSelect}
-          options={speakers.allIds.map((id) => ({
-            value: id,
-            label: speakers.byId[id].fullName,
           }))}
         />
       </Form.Item>

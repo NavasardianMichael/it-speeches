@@ -1,13 +1,23 @@
 import { FC } from 'react'
+import { Flex } from 'antd'
 import Title from 'antd/es/typography/Title'
-import styles from './styles.module.css'
+import { selectIsSpeakerEditModeActive } from '@store/speakers/selectors'
+import { useAppSelector } from '@hooks/useAppSelector'
+import { STATE_SLICE_NAMES } from '@helpers/constants/store'
+import { NewEntityCreator } from '@components/newEntityCreator'
+import { SpeakerForm } from './Form'
+import { SpeakersList } from './List'
 
-type Props = unknown
-
-export const Speakers: FC<Props> = () => {
+export const Speakers: FC = () => {
+  const isEditModeActive = useAppSelector(selectIsSpeakerEditModeActive)
   return (
-    <div className={styles.speakers}>
+    <div>
       <Title>Speakers</Title>
+      <NewEntityCreator entity={STATE_SLICE_NAMES.speeches} />
+      <Flex gap="large" align="start" style={{ marginTop: 48 }}>
+        <SpeakersList />
+        {isEditModeActive && <SpeakerForm />}
+      </Flex>
     </div>
   )
 }

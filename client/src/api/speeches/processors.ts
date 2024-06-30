@@ -1,7 +1,7 @@
 import { Speech } from '@store/speeches/types'
+import { ResponseRow } from '@helpers/types/api'
 import { Normalized } from '@helpers/types/commons'
 import { GetSpeechesResponse } from './types'
-import { ResponseRow } from '@helpers/types/api'
 
 export const processSpeeches = (response: GetSpeechesResponse) => {
   return response.reduce(

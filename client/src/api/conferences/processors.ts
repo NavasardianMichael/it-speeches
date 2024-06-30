@@ -1,7 +1,7 @@
 import { Conference } from '@store/conferences/types'
+import { ResponseRow } from '@helpers/types/api'
 import { Normalized } from '@helpers/types/commons'
 import { GetConferencesResponse } from './types'
-import { ResponseRow } from '@helpers/types/api'
 
 export const processConferences = (response: GetConferencesResponse) => {
   return response.reduce(

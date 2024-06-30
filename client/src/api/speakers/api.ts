@@ -1,6 +1,8 @@
 import { appFetch } from 'helpers/utils/api'
-import { processSpeakers } from './processors'
-import { GetSpeakersResponse } from './types'
+import { processSpeakerResponseRow, processSpeakers } from './processors'
+import { GetSpeakersResponse, SpeakerResponse } from './types'
+import { PartialButRequired } from '@helpers/types/commons'
+import { Speaker } from '@store/speakers/types'
 
 export const getSpeakers = async () => {
   const response = await appFetch<GetSpeakersResponse>({
@@ -10,4 +12,19 @@ export const getSpeakers = async () => {
   const processed = processSpeakers(response)
 
   return processed
+}
+
+export const postSpeakerOptions = async (options: PartialButRequired<Speaker, 'id'>, isNewSpeaker: boolean) => {
+  const response = await appFetch<SpeakerResponse>({
+    url: `${import.meta.env.VITE_APP_BASE_URL}speakers`,
+    params: {
+      method: isNewSpeaker ? 'POST' : 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(options),
+    },
+  })
+
+  const processedSpeaker = processSpeakerResponseRow(response)
+
+  return processedSpeaker
 }

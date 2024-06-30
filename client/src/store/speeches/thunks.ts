@@ -1,8 +1,8 @@
 import { getSpeeches, postSpeechOptions } from '@api/speeches/api'
+import { TEMP_IDS } from '@helpers/constants/defaults'
 import { createAppAsyncThunk } from '@helpers/utils/store'
 import { addSpeech, setSpeechOptions, setSpeeches } from './slice'
 import { Speech } from './types'
-import { TEMP_IDS } from '@helpers/constants/defaults'
 
 export const getSpeechesAsync = createAppAsyncThunk(
   'speeches/getSpeechesAsync',
@@ -32,4 +32,3 @@ export const setSpeechOptionsAsync = createAppAsyncThunk<unknown, Speech>(
     }
   }
 )
-

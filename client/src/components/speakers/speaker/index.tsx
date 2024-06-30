@@ -2,19 +2,19 @@ import { FC, MouseEventHandler } from 'react'
 import { Card, Image, Skeleton } from 'antd'
 import Meta from 'antd/es/card/Meta'
 import { Conference } from '@store/conferences/types'
-import { Speaker } from '@store/speakers/types'
-import { Speech as SpeechType, SpeechesSlice } from '@store/speeches/types'
+import { Speaker as SpeakerType, SpeakersSlice } from '@store/speakers/types'
+import { Speech } from '@store/speeches/types'
 import { Description } from './description'
 
 type Props = {
-  speech: SpeechType
+  speech: Speech
   onClick: MouseEventHandler<HTMLDivElement>
-  isPending: SpeechesSlice['isPending']
+  isPending: SpeakersSlice['isPending']
   conference: Conference
-  speaker: Speaker
+  speaker: SpeakerType
 }
 
-export const Speech: FC<Props> = ({ speech, onClick, isPending, conference, speaker }) => {
+export const Speaker: FC<Props> = ({ speaker, onClick, isPending, conference }) => {
   if (isPending)
     return (
       <Skeleton
@@ -31,20 +31,20 @@ export const Speech: FC<Props> = ({ speech, onClick, isPending, conference, spea
       <Card
         hoverable
         onClick={onClick}
-        data-speech-id={speech.id}
+        data-speaker-id={speaker.id}
         cover={
           <Image
             preview={false}
-            alt={`Image of speech "${speech.topic || '-'}"`}
-            src={speech.image}
+            alt={`Picture of speaker "${speaker || '-'}"`}
+            src={speaker.image}
             style={{ width: '100%' }}
             fallback="https://www.svgrepo.com/show/508699/landscape-placeholder.svg"
           />
         }
       >
         <Meta
-          title={speech.topic}
-          description={<Description details={speech} conference={conference} speaker={speaker} />}
+          title={speaker.fullName}
+          description={<Description details={speaker} conference={conference} speaker={speaker} />}
         />
       </Card>
     </>

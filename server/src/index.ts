@@ -5,9 +5,9 @@ import cors from "cors";
 import express from "express";
 import { connect } from "mongoose";
 
-import { conferencesRouter } from './routes/conferences';
-import { speechesRouter } from './routes/speeches';
-import { speakersRouter } from './routes/speakers';
+import { conferencesRouter } from "./routes/conferences";
+import { speechesRouter } from "./routes/speeches";
+import { speakersRouter } from "./routes/speakers";
 
 const PORT = 5000;
 
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*",
-  })
+  }),
 );
 
 const initDB = async () => {

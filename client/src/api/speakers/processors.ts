@@ -1,6 +1,6 @@
+import { Speaker } from '@store/speakers/types'
 import { ResponseRow } from '@helpers/types/api'
 import { Normalized } from '@helpers/types/commons'
-import { Speaker } from '@store/speakers/types'
 import { GetSpeakersResponse } from './types'
 
 export const processSpeakers = (response: GetSpeakersResponse) => {

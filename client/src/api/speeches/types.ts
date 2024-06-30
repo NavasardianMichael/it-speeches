@@ -1,5 +1,5 @@
-import { ResponseRow } from '@helpers/types/api'
 import { Speech } from '@store/speeches/types'
+import { ResponseRow } from '@helpers/types/api'
 
 export type GetSpeechesResponse = SpeechResponse[]
 

@@ -1,16 +1,24 @@
 import React from 'react'
-import { StoreProvider } from '@store'
-import { Layout } from 'antd'
+import { Flex, Layout, Spin } from 'antd'
+import { useAppInit } from '@hooks/useAppInit'
 import { Tabs } from '@components/tabs'
 import 'assets/styles/normalize.css'
 
 const App: React.FC = () => {
+  const { isInitialized } = useAppInit()
+
+  if (!isInitialized) {
+    return (
+      <Flex align="center" justify="center" gap="middle" style={{ height: '100vh' }}>
+        <Spin size="large" />
+      </Flex>
+    )
+  }
+
   return (
-    <StoreProvider>
-      <Layout style={{ padding: 16, background: '#FFF' }}>
-        <Tabs />
-      </Layout>
-    </StoreProvider>
+    <Layout style={{ padding: 16, background: '#FFF' }}>
+      <Tabs />
+    </Layout>
   )
 }
 

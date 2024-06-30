@@ -9,8 +9,10 @@
     "install-server": "cd server && npm install",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run dev",
-    "format-client": "cd client/src && npx prettier --write .",
     "ii": "concurrently \"npm i\" \"npm run install-server\" \"npm run install-dev\"",
+    "format-client": "cd client/src && npx prettier --write .",
+    "format-server": "cd server/src && npx prettier --write .",
+    "format": "concurrently \"npm run format-client\" \"npm run format-server\" ",
     "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "repository": {

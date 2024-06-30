@@ -1,18 +1,16 @@
 import { FC, MouseEventHandler, useCallback } from 'react'
 import { Col, Row } from 'antd'
-import { selectConferences, selectEditableId, selectIsConferencesPending } from '@store/conferences/selectors'
+import { selectConferences, selectEditableConferenceId, selectIsConferencesPending } from '@store/conferences/selectors'
 import { setEditableConferenceId } from '@store/conferences/slice'
 import { Conference as ConferenceType } from '@store/conferences/types'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
 import { Conference } from './conference'
 
-type Props = unknown
-
-export const ConferencesList: FC<Props> = () => {
+export const ConferencesList: FC = () => {
   const dispatch = useAppDispatch()
   const conferences = useAppSelector(selectConferences)
-  const editableId = useAppSelector(selectEditableId)
+  const editableId = useAppSelector(selectEditableConferenceId)
   const isConferencesPending = useAppSelector(selectIsConferencesPending)
 
   const handleEditConference: MouseEventHandler<HTMLDivElement> = useCallback(
@@ -23,7 +21,7 @@ export const ConferencesList: FC<Props> = () => {
     [dispatch]
   )
 
-  if(!conferences.allIds.length) return null;
+  if (!conferences.allIds.length) return null
 
   return (
     <Row gutter={[12, 12]} style={{ width: '100%', minWidth: 800 }}>

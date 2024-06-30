@@ -3,24 +3,20 @@ import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
 import { selectEditableConference, selectIsConferencesPending } from '@store/conferences/selectors'
 import { setConferenceOptionsAsync } from '@store/conferences/thunks'
+import { selectSpeeches } from '@store/speeches/selectors'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
 import { STATE_SLICE_NAMES } from '@helpers/constants/store'
 import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
-import { selectSpeeches } from '@store/speeches/selectors'
 
-type Props = unknown
-
-export const ConferenceForm: FC<Props> = () => {
+export const ConferenceForm: FC = () => {
   const speeches = useAppSelector(selectSpeeches)
   const dispatch = useAppDispatch()
   const editableConference = useAppSelector(selectEditableConference)
   const isConferencesPending = useAppSelector(selectIsConferencesPending)
   const [editedConference, setEditedConferenceOptions] = useState(editableConference)
 
-  const handleSpeechSelect: SelectProps['onChange'] = (value, option) => {
-    console.log({value, option});
-    
+  const handleSpeechSelect: SelectProps['onChange'] = (value) => {
     setEditedConferenceOptions((prev) => ({
       ...prev,
       speechIds: value,
@@ -28,8 +24,6 @@ export const ConferenceForm: FC<Props> = () => {
   }
 
   useEffect(() => {
-    console.log({editableConference});
-    
     setEditedConferenceOptions(editableConference)
   }, [editableConference])
 
@@ -40,7 +34,7 @@ export const ConferenceForm: FC<Props> = () => {
     }))
   }
 
-  const handleGenerateRandomImageClick: MouseEventHandler<HTMLElement> = () => {
+  const randomImageGeneratorClickHandler: MouseEventHandler<HTMLElement> = () => {
     setEditedConferenceOptions((prev) => ({
       ...prev,
       image: generateRandomAvatarForEntity(STATE_SLICE_NAMES.conferences),
@@ -50,7 +44,6 @@ export const ConferenceForm: FC<Props> = () => {
   const submitConference: FormProps['onFinish'] = () => {
     dispatch(setConferenceOptionsAsync(editedConference))
   }
-console.log({speeches});
 
   return (
     <Form layout="vertical" style={{ width: '30%' }} disabled={isConferencesPending} onFinish={submitConference}>
@@ -80,7 +73,7 @@ console.log({speeches});
           type="dashed"
           icon={<FileImageOutlined />}
           style={{ display: 'block' }}
-          onClick={handleGenerateRandomImageClick}
+          onClick={randomImageGeneratorClickHandler}
         >
           Generate an image
         </Button>
