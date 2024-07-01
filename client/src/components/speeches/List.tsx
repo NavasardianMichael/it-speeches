@@ -32,7 +32,7 @@ export const SpeechesList: FC = () => {
       {speeches.allIds.map((speechId) => {
         const speech = speeches.byId[speechId]
         return (
-          <Col key={speech.id} xs={24} sm={12} md={8} lg={6} xl={4}>
+          <Col key={speech.id} xs={24} sm={8} xl={6}>
             <Speech
               speech={speech}
               onClick={handleEditSpeech}

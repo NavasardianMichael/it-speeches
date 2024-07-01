@@ -1,20 +1,16 @@
 import { FC, MouseEventHandler } from 'react'
 import { Card, Image, Skeleton } from 'antd'
 import Meta from 'antd/es/card/Meta'
-import { Conference } from '@store/conferences/types'
 import { Speaker as SpeakerType, SpeakersSlice } from '@store/speakers/types'
-import { Speech } from '@store/speeches/types'
 import { Description } from './description'
 
 type Props = {
-  speech: Speech
+  speaker: SpeakerType
   onClick: MouseEventHandler<HTMLDivElement>
   isPending: SpeakersSlice['isPending']
-  conference: Conference
-  speaker: SpeakerType
 }
 
-export const Speaker: FC<Props> = ({ speaker, onClick, isPending, conference }) => {
+export const Speaker: FC<Props> = ({ speaker, onClick, isPending }) => {
   if (isPending)
     return (
       <Skeleton
@@ -42,10 +38,7 @@ export const Speaker: FC<Props> = ({ speaker, onClick, isPending, conference }) 
           />
         }
       >
-        <Meta
-          title={speaker.fullName}
-          description={<Description details={speaker} conference={conference} speaker={speaker} />}
-        />
+        <Meta title={speaker.fullName} description={<Description details={speaker} />} />
       </Card>
     </>
   )

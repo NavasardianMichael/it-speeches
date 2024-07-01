@@ -13,7 +13,7 @@ export const Speakers: FC = () => {
   return (
     <div>
       <Title>Speakers</Title>
-      <NewEntityCreator entity={STATE_SLICE_NAMES.speeches} />
+      <NewEntityCreator entity={STATE_SLICE_NAMES.speakers} />
       <Flex gap="large" align="start" style={{ marginTop: 48 }}>
         <SpeakersList />
         {isEditModeActive && <SpeakerForm />}

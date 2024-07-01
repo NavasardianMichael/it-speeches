@@ -1,8 +1,8 @@
 import { appFetch } from 'helpers/utils/api'
+import { Speaker } from '@store/speakers/types'
+import { PartialButRequired } from '@helpers/types/commons'
 import { processSpeakerResponseRow, processSpeakers } from './processors'
 import { GetSpeakersResponse, SpeakerResponse } from './types'
-import { PartialButRequired } from '@helpers/types/commons'
-import { Speaker } from '@store/speakers/types'
 
 export const getSpeakers = async () => {
   const response = await appFetch<GetSpeakersResponse>({

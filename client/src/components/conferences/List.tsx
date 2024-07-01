@@ -28,7 +28,7 @@ export const ConferencesList: FC = () => {
       {conferences.allIds.map((conferenceId) => {
         const conference = conferences.byId[conferenceId]
         return (
-          <Col key={conference.id} xs={24} sm={12} md={8} lg={6} xl={4}>
+          <Col key={conference.id} xs={24} sm={8} xl={6}>
             <Conference
               data={conference}
               onClick={handleEditConference}

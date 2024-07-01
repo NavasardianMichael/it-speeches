@@ -1,7 +1,9 @@
 import { FC, MouseEventHandler, useEffect, useState } from 'react'
+import { isRejected } from '@reduxjs/toolkit'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
 import { selectEditableConference, selectIsConferencesPending } from '@store/conferences/selectors'
+import { setEditableConferenceId } from '@store/conferences/slice'
 import { setConferenceOptionsAsync } from '@store/conferences/thunks'
 import { selectSpeeches } from '@store/speeches/selectors'
 import { useAppDispatch } from '@hooks/useAppDispatch'
@@ -23,10 +25,6 @@ export const ConferenceForm: FC = () => {
     }))
   }
 
-  useEffect(() => {
-    setEditedConferenceOptions(editableConference)
-  }, [editableConference])
-
   const onTextChange: InputProps['onChange'] = (e) => {
     setEditedConferenceOptions((prev) => ({
       ...prev,
@@ -41,9 +39,14 @@ export const ConferenceForm: FC = () => {
     }))
   }
 
-  const submitConference: FormProps['onFinish'] = () => {
-    dispatch(setConferenceOptionsAsync(editedConference))
+  const submitConference: FormProps['onFinish'] = async () => {
+    const action = await dispatch(setConferenceOptionsAsync(editedConference))
+    if (!isRejected(action)) dispatch(setEditableConferenceId(''))
   }
+
+  useEffect(() => {
+    setEditedConferenceOptions(editableConference)
+  }, [editableConference])
 
   return (
     <Form layout="vertical" style={{ width: '30%' }} disabled={isConferencesPending} onFinish={submitConference}>

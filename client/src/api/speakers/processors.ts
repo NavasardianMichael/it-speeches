@@ -7,7 +7,7 @@ export const processSpeakers = (response: GetSpeakersResponse) => {
   return response.reduce(
     (acc, speaker) => {
       const processedSpeaker = processSpeakerResponseRow(speaker) as Speaker
-      acc.byId[speaker.id] = processedSpeaker
+      acc.byId[processedSpeaker.id] = processedSpeaker
       acc.allIds.push(processedSpeaker.id)
       return acc
     },

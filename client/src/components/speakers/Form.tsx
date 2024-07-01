@@ -1,10 +1,12 @@
 import { FC, MouseEventHandler, useEffect, useState } from 'react'
+import { isRejected } from '@reduxjs/toolkit'
 import { FileImageOutlined } from '@ant-design/icons'
 import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
-import { selectConferences } from '@store/conferences/selectors'
-import { selectEditableSpeaker, selectIsSpeakersPending, selectSpeakers } from '@store/speakers/selectors'
+import { DefaultOptionType } from 'antd/es/select'
+import { selectEditableSpeaker, selectIsSpeakersPending } from '@store/speakers/selectors'
+import { setEditableSpeakerId } from '@store/speakers/slice'
 import { setSpeakerOptionsAsync } from '@store/speakers/thunks'
-import { setSpeechOptionsAsync } from '@store/speeches/thunks'
+import { selectSpeeches } from '@store/speeches/selectors'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
 import { STATE_SLICE_NAMES } from '@helpers/constants/store'
@@ -12,29 +14,22 @@ import { generateRandomAvatarForEntity } from '@helpers/utils/avatars'
 
 export const SpeakerForm: FC = () => {
   const dispatch = useAppDispatch()
-  const conferences = useAppSelector(selectConferences)
-  const speakers = useAppSelector(selectSpeakers)
+  const speeches = useAppSelector(selectSpeeches)
   const editableSpeaker = useAppSelector(selectEditableSpeaker)
   const isSpeakersPending = useAppSelector(selectIsSpeakersPending)
   const [editedSpeaker, setEditedSpeakerOptions] = useState(editableSpeaker)
 
-  const handleConferenceSelect: SelectProps['onChange'] = (value) => {
+  const speechOptions: DefaultOptionType[] = speeches.allIds.map((id) => ({
+    value: id,
+    label: speeches.byId[id].topic || 'Unknown Topic',
+  }))
+
+  const handleSpeechesSelect: SelectProps['onChange'] = (value) => {
     setEditedSpeakerOptions((prev) => ({
       ...prev,
-      conferenceId: value,
+      speechIds: value,
     }))
   }
-
-  const handleSpeakerSelect: SelectProps['onChange'] = (value) => {
-    setEditedSpeakerOptions((prev) => ({
-      ...prev,
-      speakerId: value,
-    }))
-  }
-
-  useEffect(() => {
-    setEditedSpeakerOptions(editableSpeaker)
-  }, [editableSpeaker])
 
   const onTextChange: InputProps['onChange'] = (e) => {
     setEditedSpeakerOptions((prev) => ({
@@ -50,9 +45,16 @@ export const SpeakerForm: FC = () => {
     }))
   }
 
-  const submitSpeaker: FormProps['onFinish'] = () => {
-    dispatch(setSpeakerOptionsAsync(editedSpeaker))
+  const submitSpeaker: FormProps['onFinish'] = async () => {
+    const action = await dispatch(
+      setSpeakerOptionsAsync({ speaker: editedSpeaker, oldSpeechIds: editableSpeaker.speechIds })
+    )
+    if (!isRejected(action)) dispatch(setEditableSpeakerId(''))
   }
+
+  useEffect(() => {
+    setEditedSpeakerOptions(editableSpeaker)
+  }, [editableSpeaker])
 
   return (
     <Form
@@ -61,8 +63,14 @@ export const SpeakerForm: FC = () => {
       disabled={isSpeakersPending}
       onFinish={submitSpeaker}
     >
-      <Form.Item label="Name">
-        <Input required placeholder="Topic" value={editedSpeaker.fullName} onChange={onTextChange} name="topic" />
+      <Form.Item label="Full Name">
+        <Input
+          required
+          placeholder="Enter Full Name"
+          value={editedSpeaker.fullName}
+          onChange={onTextChange}
+          name="fullName"
+        />
       </Form.Item>
       <Form.Item label="Position">
         <Input placeholder="Position" value={editedSpeaker.position} onChange={onTextChange} name="position" />
@@ -86,13 +94,11 @@ export const SpeakerForm: FC = () => {
       </Form.Item>
       <Form.Item label="Speeches">
         <Select
+          mode="tags"
           placeholder="Select speeches"
           value={editedSpeaker.speechIds}
-          onChange={handleConferenceSelect}
-          options={conferences.allIds.map((id) => ({
-            value: id,
-            label: conferences.byId[id].name,
-          }))}
+          onChange={handleSpeechesSelect}
+          options={speechOptions}
         />
       </Form.Item>
       <Form.Item>

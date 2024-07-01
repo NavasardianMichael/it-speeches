@@ -1,9 +1,13 @@
 import { FC, MouseEventHandler, useEffect, useState } from 'react'
+import { isRejected } from '@reduxjs/toolkit'
 import { FileImageOutlined } from '@ant-design/icons'
-import { Button, Form, FormProps, Image, Input, InputProps, Select, SelectProps } from 'antd'
+import { Button, Form, FormProps, Image, Input, InputProps, Select } from 'antd'
 import { selectConferences } from '@store/conferences/selectors'
+import { Conference } from '@store/conferences/types'
 import { selectSpeakers } from '@store/speakers/selectors'
+import { Speaker } from '@store/speakers/types'
 import { selectEditableSpeech, selectIsSpeechesPending } from '@store/speeches/selectors'
+import { setEditableSpeechId } from '@store/speeches/slice'
 import { setSpeechOptionsAsync } from '@store/speeches/thunks'
 import { useAppDispatch } from '@hooks/useAppDispatch'
 import { useAppSelector } from '@hooks/useAppSelector'
@@ -18,23 +22,19 @@ export const SpeechForm: FC = () => {
   const isSpeechesPending = useAppSelector(selectIsSpeechesPending)
   const [editedSpeech, setEditedSpeechOptions] = useState(editableSpeech)
 
-  const handleConferenceSelect: SelectProps['onChange'] = (value) => {
+  const handleConferenceSelect = (value: Conference['id']) => {
     setEditedSpeechOptions((prev) => ({
       ...prev,
       conferenceId: value,
     }))
   }
 
-  const handleSpeakerSelect: SelectProps['onChange'] = (value) => {
+  const handleSpeakerSelect = (value: Speaker['id']) => {
     setEditedSpeechOptions((prev) => ({
       ...prev,
       speakerId: value,
     }))
   }
-
-  useEffect(() => {
-    setEditedSpeechOptions(editableSpeech)
-  }, [editableSpeech])
 
   const onTextChange: InputProps['onChange'] = (e) => {
     setEditedSpeechOptions((prev) => ({
@@ -50,9 +50,14 @@ export const SpeechForm: FC = () => {
     }))
   }
 
-  const submitSpeech: FormProps['onFinish'] = () => {
-    dispatch(setSpeechOptionsAsync(editedSpeech))
+  const submitSpeech: FormProps['onFinish'] = async () => {
+    const action = await dispatch(setSpeechOptionsAsync(editedSpeech))
+    if (!isRejected(action)) dispatch(setEditableSpeechId(''))
   }
+
+  useEffect(() => {
+    setEditedSpeechOptions(editableSpeech)
+  }, [editableSpeech])
 
   return (
     <Form
@@ -64,7 +69,7 @@ export const SpeechForm: FC = () => {
       <Form.Item label="Name">
         <Input required placeholder="Topic" value={editedSpeech.topic} onChange={onTextChange} name="topic" />
       </Form.Item>
-      <Form.Item label="Location">
+      <Form.Item label="Duration">
         <Input placeholder="Duration" value={editedSpeech.duration} onChange={onTextChange} name="duration" />
       </Form.Item>
       <Form.Item label="Image">
@@ -87,6 +92,8 @@ export const SpeechForm: FC = () => {
       <Form.Item label="Conference">
         <Select
           placeholder="Select the conference"
+          allowClear
+          onClear={() => handleConferenceSelect('')}
           value={editedSpeech.conferenceId}
           onChange={handleConferenceSelect}
           options={conferences.allIds.map((id) => ({
@@ -98,6 +105,8 @@ export const SpeechForm: FC = () => {
       <Form.Item label="Speaker">
         <Select
           placeholder="Select the speaker"
+          allowClear
+          onClear={() => handleSpeakerSelect('')}
           value={editedSpeech.speakerId}
           onChange={handleSpeakerSelect}
           options={speakers.allIds.map((id) => ({

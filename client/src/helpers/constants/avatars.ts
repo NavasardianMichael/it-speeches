@@ -87,7 +87,5 @@ export const AVATAR_BACKGROUND_COLORS = ['ffdfbf', 'b6e3f4', 'c0aede', 'd1d4f9',
 export const AVATAR_BASE_URL = 'https://api.dicebear.com/8.x'
 
 export const AVATAR_STATIC_OPTIONS = {
-  baseColor: 'transparent',
-  backgroundType: 'solid,gradientLinear',
   randomizeIds: false,
 }
